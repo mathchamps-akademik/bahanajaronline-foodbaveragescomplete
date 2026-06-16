@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Worksheet Online F&amp;B</title>
+  <title>Day 1 - Pre Test</title>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@700;800;900&display=swap');
 :root {
@@ -497,14 +497,215 @@ h1 {
 </head>
 <body class="">
 
-<main class="section worksheet-page">
-  <aside class="worksheet-list">
-    <a class="button" href="index.html">Kembali ke Hub</a>
-    <a class="button secondary" href="worksheet-online.pdf" target="_blank" rel="noopener">Buka PDF</a>
-    <a class='button light' href='#cover'>Cover</a><a class='button light' href='#prolog'>Prolog</a><a class='button light' href='#worksheet-1-product-explorer'>Worksheet 1 - Product Explorer</a><a class='button light' href='#worksheet-2-customer-detective'>Worksheet 2 - Customer Detective</a><a class='button light' href='#worksheet-3-brand-creator'>Worksheet 3 - Brand Creator</a><a class='button light' href='#pr-diskusi-1'>PR Diskusi 1</a><a class='button light' href='#worksheet-4-budget-master'>Worksheet 4 - Budget Master</a><a class='button light' href='#worksheet-5-pricing-expert'>Worksheet 5 - Pricing Expert</a><a class='button light' href='#worksheet-6-packaging-advertising'>Worksheet 6 - Packaging and Advertising Studio</a><a class='button light' href='#worksheet-sales-champion'>Sales Champion</a><a class='button light' href='#production-planner'>Production Planner</a><a class='button light' href='#final-presentation'>Final Presentation</a><a class='button light' href='#closing'>Closing</a>
-  </aside>
-  <div><section class='worksheet-preview' id='cover'><h2>Cover</h2><img src='cover.png' alt='Cover'></section><section class='worksheet-preview' id='prolog'><h2>Prolog</h2><img src='prolog.png' alt='Prolog'></section><section class='worksheet-preview' id='worksheet-1-product-explorer'><h2>Worksheet 1 - Product Explorer</h2><img src='worksheet-1-product-explorer.png' alt='Worksheet 1 - Product Explorer'></section><section class='worksheet-preview' id='worksheet-2-customer-detective'><h2>Worksheet 2 - Customer Detective</h2><img src='worksheet-2-customer-detective.png' alt='Worksheet 2 - Customer Detective'></section><section class='worksheet-preview' id='worksheet-3-brand-creator'><h2>Worksheet 3 - Brand Creator</h2><img src='worksheet-3-brand-creator.png' alt='Worksheet 3 - Brand Creator'></section><section class='worksheet-preview' id='pr-diskusi-1'><h2>PR Diskusi 1</h2><img src='pr-diskusi-1.png' alt='PR Diskusi 1'></section><section class='worksheet-preview' id='worksheet-4-budget-master'><h2>Worksheet 4 - Budget Master</h2><img src='worksheet-4-budget-master.png' alt='Worksheet 4 - Budget Master'></section><section class='worksheet-preview' id='worksheet-5-pricing-expert'><h2>Worksheet 5 - Pricing Expert</h2><img src='worksheet-5-pricing-expert.png' alt='Worksheet 5 - Pricing Expert'></section><section class='worksheet-preview' id='worksheet-6-packaging-advertising'><h2>Worksheet 6 - Packaging and Advertising Studio</h2><img src='worksheet-6-packaging-advertising.png' alt='Worksheet 6 - Packaging and Advertising Studio'></section><section class='worksheet-preview' id='worksheet-sales-champion'><h2>Sales Champion</h2><img src='worksheet-sales-champion.png' alt='Sales Champion'></section><section class='worksheet-preview' id='production-planner'><h2>Production Planner</h2><img src='production-planner.png' alt='Production Planner'></section><section class='worksheet-preview' id='final-presentation'><h2>Final Presentation</h2><img src='final-presentation.png' alt='Final Presentation'></section><section class='worksheet-preview' id='closing'><h2>Closing</h2><img src='closing.png' alt='Closing'></section></div>
+<main class="test-shell">
+  <section class="test-card">
+    <p class="eyebrow">Math Champs Holiday Program Online</p>
+    <h1>Day 1 - Pre Test</h1>
+    <p class="hero-copy">Isi data diri dengan benar, lalu jawab 5 soal pilihan ganda. Siswa hanya boleh submit satu kali.</p>
+    <p><strong>Catatan untuk guru:</strong> pastikan hasil submit siswa sudah masuk ke spreadsheet hasil sebelum kelas dilanjutkan atau ditutup.</p>
+  </section>
+  <form class="test-card" id="testForm">
+    <div class="form-grid">
+      <div class="field">
+        <label for="email">Email Siswa</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="studentName">Nama Lengkap Siswa</label>
+        <input id="studentName" name="studentName" type="text" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="teacherName">Nama Guru</label>
+        <select id="teacherName" name="teacherName" required>
+          <option value="">Pilih nama guru</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="classMode">Kelas Online atau Offline</label>
+        <select id="classMode" name="classMode" required>
+          <option value="">Pilih kelas</option>
+          <option value="Online">Online</option>
+          <option value="Offline">Offline</option>
+        </select>
+      </div>
+    </div>
+    
+<section class="question-card">
+  <h3>1. Produk jualan sederhana adalah ...</h3>
+  
+<label class="option-label">
+  <input type="radio" name="q1" value="A" required>
+  <strong>A.</strong> Produk yang hanya boleh dibuat orang dewasa
+</label>
+<label class="option-label">
+  <input type="radio" name="q1" value="B" required>
+  <strong>B.</strong> Barang/makanan/minuman yang dibuat untuk ditawarkan ke pembeli
+</label>
+<label class="option-label">
+  <input type="radio" name="q1" value="C" required>
+  <strong>C.</strong> Gambar yang tidak boleh dijual
+</label>
+<label class="option-label">
+  <input type="radio" name="q1" value="D" required>
+  <strong>D.</strong> Mainan yang harus mahal
+</label>
+</section>
+<section class="question-card">
+  <h3>2. Jika bahan utama yang didapat adalah roti, ide produk yang cocok adalah ...</h3>
+  
+<label class="option-label">
+  <input type="radio" name="q2" value="A" required>
+  <strong>A.</strong> Roti isi buah
+</label>
+<label class="option-label">
+  <input type="radio" name="q2" value="B" required>
+  <strong>B.</strong> Es batu kosong
+</label>
+<label class="option-label">
+  <input type="radio" name="q2" value="C" required>
+  <strong>C.</strong> Pensil warna
+</label>
+<label class="option-label">
+  <input type="radio" name="q2" value="D" required>
+  <strong>D.</strong> Sabun cuci
+</label>
+</section>
+<section class="question-card">
+  <h3>3. Calon pembeli adalah ...</h3>
+  
+<label class="option-label">
+  <input type="radio" name="q3" value="A" required>
+  <strong>A.</strong> Orang yang mungkin membeli produk kita
+</label>
+<label class="option-label">
+  <input type="radio" name="q3" value="B" required>
+  <strong>B.</strong> Orang yang tidak boleh melihat produk
+</label>
+<label class="option-label">
+  <input type="radio" name="q3" value="C" required>
+  <strong>C.</strong> Nama bahan utama
+</label>
+<label class="option-label">
+  <input type="radio" name="q3" value="D" required>
+  <strong>D.</strong> Harga modal
+</label>
+</section>
+<section class="question-card">
+  <h3>4. Sebelum memilih ide produk, sebaiknya kita memikirkan ...</h3>
+  
+<label class="option-label">
+  <input type="radio" name="q4" value="A" required>
+  <strong>A.</strong> Warna baju guru
+</label>
+<label class="option-label">
+  <input type="radio" name="q4" value="B" required>
+  <strong>B.</strong> Bahan dan siapa pembelinya
+</label>
+<label class="option-label">
+  <input type="radio" name="q4" value="C" required>
+  <strong>C.</strong> Nama jalan
+</label>
+<label class="option-label">
+  <input type="radio" name="q4" value="D" required>
+  <strong>D.</strong> Jumlah kursi
+</label>
+</section>
+<section class="question-card">
+  <h3>5. Harga jual adalah ...</h3>
+  
+<label class="option-label">
+  <input type="radio" name="q5" value="A" required>
+  <strong>A.</strong> Uang yang dibayar pembeli untuk produk
+</label>
+<label class="option-label">
+  <input type="radio" name="q5" value="B" required>
+  <strong>B.</strong> Nama logo
+</label>
+<label class="option-label">
+  <input type="radio" name="q5" value="C" required>
+  <strong>C.</strong> Jumlah teman sekelas
+</label>
+<label class="option-label">
+  <input type="radio" name="q5" value="D" required>
+  <strong>D.</strong> Waktu istirahat
+</label>
+</section>
+    <button class="button" type="submit" style="margin-top:18px">Submit Jawaban</button>
+    <div class="status-box" id="statusBox" role="status"></div>
+  </form>
 </main>
+<script src="test-config.js"></script>
+<script>
+const TEST_META = {
+  testId: "day1-pre",
+  day: 1,
+  kind: "Pre Test",
+  answerKey: {"q1": "B", "q2": "A", "q3": "A", "q4": "B", "q5": "A"}
+};
+const config = window.MATHCHAMPS_TEST_CONFIG || {};
+const teacherSelect = document.getElementById("teacherName");
+(config.teachers || []).forEach((name) => {
+  const opt = document.createElement("option");
+  opt.value = name;
+  opt.textContent = name;
+  teacherSelect.appendChild(opt);
+});
+function setStatus(type, message) {
+  const box = document.getElementById("statusBox");
+  box.className = `status-box ${type}`;
+  box.textContent = message;
+}
+function collectAnswers(form) {
+  const answers = {};
+  Object.keys(TEST_META.answerKey).forEach((key) => {
+    answers[key] = form.querySelector(`input[name="${key}"]:checked`)?.value || "";
+  });
+  return answers;
+}
+function calculateScore(answers) {
+  return Object.entries(TEST_META.answerKey).reduce((score, [key, correct]) => score + (answers[key] === correct ? 20 : 0), 0);
+}
+document.getElementById("testForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const email = form.email.value.trim().toLowerCase();
+  const lockKey = `mathchamps-submitted:${TEST_META.testId}:${email}`;
+  if (localStorage.getItem(lockKey)) {
+    setStatus("warn", "Kamu sudah pernah submit test ini dari device/browser ini. Jika ada kesalahan, hubungi guru.");
+    return;
+  }
+  const answers = collectAnswers(form);
+  const payload = {
+    submittedAt: new Date().toISOString(),
+    testId: TEST_META.testId,
+    day: TEST_META.day,
+    kind: TEST_META.kind,
+    email,
+    studentName: form.studentName.value.trim(),
+    teacherName: form.teacherName.value,
+    classMode: form.classMode.value,
+    score: calculateScore(answers),
+    answers
+  };
+  if (!config.scriptUrl) {
+    setStatus("warn", "Jawaban belum terkirim ke spreadsheet karena URL Apps Script belum dipasang di test-config.js. Minta admin/guru mengecek setup.");
+    return;
+  }
+  try {
+    await fetch(config.scriptUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+    localStorage.setItem(lockKey, "1");
+    form.querySelector("button[type='submit']").disabled = true;
+    setStatus("ok", "Jawaban sudah dikirim. Terima kasih, hasilmu akan dicek guru di spreadsheet.");
+  } catch (error) {
+    setStatus("err", "Jawaban belum berhasil dikirim. Cek koneksi internet lalu coba lagi.");
+  }
+});
+</script>
 
 </body>
 </html>

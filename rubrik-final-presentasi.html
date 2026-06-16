@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rubrik Final Presentation</title>
   <style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@700;800;900&display=swap');
 :root {
   --teal: #0f7777;
   --teal-2: #2f9f9a;
@@ -21,7 +22,7 @@
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  font-family: Inter, Nunito, Arial, sans-serif;
+  font-family: "Baloo 2", "Comic Sans MS", "Nunito", Arial, sans-serif;
   color: var(--ink);
   background:
     radial-gradient(circle at 8% 10%, rgba(255,255,255,.75), transparent 18rem),
@@ -61,7 +62,12 @@ a { color: inherit; }
   font-weight: 900;
   letter-spacing: 0;
 }
-h1, h2, h3 { letter-spacing: 0; margin: 0; }
+h1, h2, h3 {
+  letter-spacing: 0;
+  margin: 0;
+  font-family: "Nunito", "Baloo 2", Arial, sans-serif;
+  font-weight: 900;
+}
 h1 {
   max-width: 920px;
   font-size: clamp(46px, 6vw, 84px);
@@ -164,7 +170,8 @@ h1 {
   padding: 12px;
   text-align: left;
   vertical-align: top;
-  font-size: 16px;
+  font-size: 18px;
+  line-height: 1.26;
 }
 .mini-table th { background: #167b78; color: white; }
 .footer {
@@ -230,7 +237,7 @@ h1 {
 .subtitle {
   font-size: clamp(24px, 2.5vw, 36px);
   line-height: 1.28;
-  font-weight: 800;
+  font-weight: 850;
   margin-top: 18px;
 }
 .tag-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
@@ -252,9 +259,9 @@ h1 {
 .slide-panel { padding: 26px; }
 .slide-panel h3 { font-size: 30px; color: var(--blue); margin-bottom: 14px; }
 .slide-panel p, .slide-panel li {
-  font-size: clamp(22px, 2vw, 30px);
-  line-height: 1.34;
-  font-weight: 750;
+  font-size: clamp(26px, 2.25vw, 34px);
+  line-height: 1.23;
+  font-weight: 760;
 }
 .slide-panel ul { margin: 0; padding-left: 26px; }
 .two-col {
@@ -312,7 +319,7 @@ h1 {
   border: 3px solid rgba(15,119,119,.2);
   border-radius: 8px;
   padding: 15px 18px;
-  font-size: clamp(22px, 2vw, 31px);
+  font-size: clamp(26px, 2.25vw, 35px);
   font-weight: 850;
 }
 .num-dot {
@@ -369,8 +376,115 @@ h1 {
   padding: 24px;
 }
 .result-text { font-size: 52px; color: var(--teal); font-weight: 1000; margin: 12px 0 18px; }
+.prep-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.prep-card {
+  background: rgba(255,255,255,.92);
+  border: 3px solid rgba(15,119,119,.24);
+  border-radius: 8px;
+  padding: 18px 20px;
+  min-height: 148px;
+}
+.prep-card h3 {
+  color: var(--blue);
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+.prep-card p {
+  margin: 0;
+  font-size: clamp(25px, 2vw, 32px);
+  line-height: 1.2;
+  font-weight: 800;
+}
+.example-box {
+  background: #fff7cf;
+  border: 3px solid rgba(255,159,28,.42);
+  border-radius: 8px;
+  padding: 18px 20px;
+}
+.example-box h3 {
+  color: #945c00;
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+.source-note {
+  position: absolute;
+  left: 54px;
+  bottom: 22px;
+  max-width: calc(100% - 108px);
+  color: #5b6f78;
+  font-size: 15px;
+  font-weight: 800;
+}
+.test-shell {
+  min-height: 100vh;
+  padding: 36px clamp(16px, 4vw, 64px);
+  background: linear-gradient(120deg, #fbf0b5 0%, #cdebd1 42%, #93ddee 100%);
+}
+.test-card {
+  max-width: 980px;
+  margin: 0 auto 16px;
+  background: rgba(255,255,255,.92);
+  border: 3px solid rgba(15,119,119,.26);
+  border-radius: 8px;
+  padding: 22px;
+  box-shadow: 0 14px 30px rgba(23,49,59,.12);
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.field label {
+  display: block;
+  color: var(--blue);
+  font-weight: 900;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+.field input, .field select {
+  width: 100%;
+  min-height: 48px;
+  border: 2px solid rgba(15,119,119,.32);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: 800 19px "Baloo 2", "Comic Sans MS", Arial, sans-serif;
+  color: var(--ink);
+  background: #fff;
+}
+.question-card {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 2px dashed rgba(15,119,119,.22);
+}
+.question-card h3 { color: var(--teal); font-size: 24px; }
+.option-label {
+  display: block;
+  padding: 10px 12px;
+  border: 2px solid rgba(15,119,119,.18);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 19px;
+  font-weight: 800;
+}
+.option-label input { margin-right: 8px; }
+.status-box {
+  display: none;
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: 900;
+}
+.status-box.ok { display: block; background: #dff8da; color: #246326; }
+.status-box.warn { display: block; background: #fff2ba; color: #7a5100; }
+.status-box.err { display: block; background: #ffe0dc; color: #8d2b1c; }
 @media (max-width: 980px) {
-  .hero, .cards, .two-col, .three-col, .worksheet-page, .wheel-page { grid-template-columns: 1fr; }
+  .hero, .cards, .two-col, .three-col, .worksheet-page, .wheel-page, .prep-grid, .form-grid { grid-template-columns: 1fr; }
   .slide { overflow: auto; height: auto; min-height: 100vh; }
 }
 @media print {

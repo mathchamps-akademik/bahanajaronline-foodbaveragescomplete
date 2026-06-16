@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Worksheet Online F&amp;B</title>
+  <title>Setup Spreadsheet Hasil</title>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@700;800;900&display=swap');
 :root {
@@ -497,13 +497,41 @@ h1 {
 </head>
 <body class="">
 
-<main class="section worksheet-page">
-  <aside class="worksheet-list">
-    <a class="button" href="index.html">Kembali ke Hub</a>
-    <a class="button secondary" href="worksheet-online.pdf" target="_blank" rel="noopener">Buka PDF</a>
-    <a class='button light' href='#cover'>Cover</a><a class='button light' href='#prolog'>Prolog</a><a class='button light' href='#worksheet-1-product-explorer'>Worksheet 1 - Product Explorer</a><a class='button light' href='#worksheet-2-customer-detective'>Worksheet 2 - Customer Detective</a><a class='button light' href='#worksheet-3-brand-creator'>Worksheet 3 - Brand Creator</a><a class='button light' href='#pr-diskusi-1'>PR Diskusi 1</a><a class='button light' href='#worksheet-4-budget-master'>Worksheet 4 - Budget Master</a><a class='button light' href='#worksheet-5-pricing-expert'>Worksheet 5 - Pricing Expert</a><a class='button light' href='#worksheet-6-packaging-advertising'>Worksheet 6 - Packaging and Advertising Studio</a><a class='button light' href='#worksheet-sales-champion'>Sales Champion</a><a class='button light' href='#production-planner'>Production Planner</a><a class='button light' href='#final-presentation'>Final Presentation</a><a class='button light' href='#closing'>Closing</a>
-  </aside>
-  <div><section class='worksheet-preview' id='cover'><h2>Cover</h2><img src='cover.png' alt='Cover'></section><section class='worksheet-preview' id='prolog'><h2>Prolog</h2><img src='prolog.png' alt='Prolog'></section><section class='worksheet-preview' id='worksheet-1-product-explorer'><h2>Worksheet 1 - Product Explorer</h2><img src='worksheet-1-product-explorer.png' alt='Worksheet 1 - Product Explorer'></section><section class='worksheet-preview' id='worksheet-2-customer-detective'><h2>Worksheet 2 - Customer Detective</h2><img src='worksheet-2-customer-detective.png' alt='Worksheet 2 - Customer Detective'></section><section class='worksheet-preview' id='worksheet-3-brand-creator'><h2>Worksheet 3 - Brand Creator</h2><img src='worksheet-3-brand-creator.png' alt='Worksheet 3 - Brand Creator'></section><section class='worksheet-preview' id='pr-diskusi-1'><h2>PR Diskusi 1</h2><img src='pr-diskusi-1.png' alt='PR Diskusi 1'></section><section class='worksheet-preview' id='worksheet-4-budget-master'><h2>Worksheet 4 - Budget Master</h2><img src='worksheet-4-budget-master.png' alt='Worksheet 4 - Budget Master'></section><section class='worksheet-preview' id='worksheet-5-pricing-expert'><h2>Worksheet 5 - Pricing Expert</h2><img src='worksheet-5-pricing-expert.png' alt='Worksheet 5 - Pricing Expert'></section><section class='worksheet-preview' id='worksheet-6-packaging-advertising'><h2>Worksheet 6 - Packaging and Advertising Studio</h2><img src='worksheet-6-packaging-advertising.png' alt='Worksheet 6 - Packaging and Advertising Studio'></section><section class='worksheet-preview' id='worksheet-sales-champion'><h2>Sales Champion</h2><img src='worksheet-sales-champion.png' alt='Sales Champion'></section><section class='worksheet-preview' id='production-planner'><h2>Production Planner</h2><img src='production-planner.png' alt='Production Planner'></section><section class='worksheet-preview' id='final-presentation'><h2>Final Presentation</h2><img src='final-presentation.png' alt='Final Presentation'></section><section class='worksheet-preview' id='closing'><h2>Closing</h2><img src='closing.png' alt='Closing'></section></div>
+<main class="section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Setup Pre/Post Test Online</p>
+      <h2>Spreadsheet Hasil Realtime</h2>
+    </div>
+    <p class="section-note">GitHub Pages hanya menampilkan halaman test. Agar jawaban siswa masuk ke spreadsheet, pasang Google Apps Script sekali lalu tempel URL Web App ke <code>test-config.js</code>.</p>
+  </div>
+  <div class="resource-grid">
+    <section class="resource-block">
+      <h3>1. Buat Spreadsheet</h3>
+      <p>Buat Google Spreadsheet baru untuk hasil test. Beri nama misalnya: Hasil Test Mathpreneur F&B Online.</p>
+    </section>
+    <section class="resource-block">
+      <h3>2. Buka Apps Script</h3>
+      <p>Di spreadsheet, pilih Extensions &gt; Apps Script. Paste isi file <code>google-apps-script-submit-results.gs</code>.</p>
+    </section>
+    <section class="resource-block">
+      <h3>3. Deploy Web App</h3>
+      <p>Klik Deploy &gt; New deployment &gt; Web app. Set akses menjadi Anyone, lalu salin Web App URL.</p>
+    </section>
+    <section class="resource-block">
+      <h3>4. Edit test-config.js</h3>
+      <p>Paste Web App URL ke bagian <code>scriptUrl</code>. Isi juga daftar nama guru pada bagian <code>teachers</code>.</p>
+    </section>
+    <section class="resource-block">
+      <h3>5. Saat Kelas Berlangsung</h3>
+      <p>Guru membuka spreadsheet hasil dan memastikan setiap siswa sudah submit pre test dan post test. Kolom tanggal dan waktu submit otomatis terisi.</p>
+    </section>
+  </div>
+  <div class="button-row" style="margin-top:22px">
+    <a class="button" href="google-apps-script-submit-results.gs" target="_blank" rel="noopener">Buka Apps Script</a>
+    <a class="button secondary" href="test-config.js" target="_blank" rel="noopener">Buka test-config.js</a>
+    <a class="button light" href="index.html">Kembali ke Hub</a>
+  </div>
 </main>
 
 </body>
