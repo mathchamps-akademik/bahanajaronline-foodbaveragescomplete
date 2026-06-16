@@ -23,6 +23,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: "Baloo 2", "Comic Sans MS", "Nunito", Arial, sans-serif;
+  font-weight: 500;
   color: var(--ink);
   background:
     radial-gradient(circle at 8% 10%, rgba(255,255,255,.75), transparent 18rem),
@@ -167,11 +168,11 @@ h1 {
 }
 .mini-table th, .mini-table td {
   border: 2px solid rgba(15,119,119,.25);
-  padding: 12px;
+  padding: 8px 10px;
   text-align: left;
   vertical-align: top;
-  font-size: 18px;
-  line-height: 1.26;
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.18;
 }
 .mini-table th { background: #167b78; color: white; }
 .footer {
@@ -212,7 +213,7 @@ h1 {
   width: 100vw;
   height: 100vh;
   display: none;
-  padding: 42px 54px;
+  padding: 34px 54px 74px;
   background:
     radial-gradient(circle at 92% 12%, rgba(255,255,255,.55), transparent 16rem),
     linear-gradient(120deg, #f7f2c7 0%, #c9edd9 36%, #99e1f2 100%);
@@ -225,20 +226,20 @@ h1 {
   align-items: center;
   gap: 36px;
 }
-.slide.layout-content { grid-template-rows: auto 1fr; gap: 22px; }
+.slide.layout-content { grid-template-rows: auto minmax(0, 1fr); gap: 18px; }
 .slide-kicker {
-  font-size: 22px;
+  font-size: 20px;
   color: var(--blue);
   font-weight: 900;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
-.slide h1 { font-size: clamp(54px, 7vw, 94px); color: #0b716e; }
-.slide h2 { font-size: clamp(38px, 4.6vw, 66px); color: #0b716e; }
+.slide h1 { font-size: clamp(48px, 6.2vw, 82px); color: #0b716e; }
+.slide h2 { font-size: clamp(34px, 4vw, 58px); color: #0b716e; }
 .subtitle {
-  font-size: clamp(24px, 2.5vw, 36px);
-  line-height: 1.28;
-  font-weight: 850;
-  margin-top: 18px;
+  font-size: clamp(21px, 2vw, 30px);
+  line-height: 1.24;
+  font-weight: 600;
+  margin-top: 14px;
 }
 .tag-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 .tag {
@@ -256,12 +257,12 @@ h1 {
   border-radius: 8px;
   box-shadow: 0 14px 32px rgba(23,49,59,.13);
 }
-.slide-panel { padding: 26px; }
-.slide-panel h3 { font-size: 30px; color: var(--blue); margin-bottom: 14px; }
+.slide-panel { padding: 20px 22px; }
+.slide-panel h3 { font-size: 27px; color: var(--blue); margin-bottom: 10px; }
 .slide-panel p, .slide-panel li {
-  font-size: clamp(26px, 2.25vw, 34px);
+  font-size: clamp(21px, 1.75vw, 27px);
   line-height: 1.23;
-  font-weight: 760;
+  font-weight: 500;
 }
 .slide-panel ul { margin: 0; padding-left: 26px; }
 .two-col {
@@ -281,7 +282,7 @@ h1 {
   color: white;
 }
 .note-box h3 { color: white; font-size: 28px; margin-bottom: 10px; }
-.note-box li, .note-box p { font-size: 23px; line-height: 1.35; font-weight: 800; }
+.note-box li, .note-box p { font-size: 21px; line-height: 1.28; font-weight: 600; }
 .image-card {
   padding: 12px;
   display: flex;
@@ -308,26 +309,29 @@ h1 {
 }
 .big-list {
   display: grid;
-  gap: 14px;
+  gap: 10px;
+  align-content: start;
+  min-height: 0;
 }
 .big-item {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 14px;
+  gap: 12px;
   align-items: start;
   background: rgba(255,255,255,.9);
   border: 3px solid rgba(15,119,119,.2);
   border-radius: 8px;
-  padding: 15px 18px;
-  font-size: clamp(26px, 2.25vw, 35px);
-  font-weight: 850;
+  padding: 12px 16px;
+  font-size: clamp(21px, 1.75vw, 28px);
+  line-height: 1.22;
+  font-weight: 500;
 }
 .num-dot {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: var(--orange);
   color: white;
@@ -385,19 +389,19 @@ h1 {
   background: rgba(255,255,255,.92);
   border: 3px solid rgba(15,119,119,.24);
   border-radius: 8px;
-  padding: 18px 20px;
-  min-height: 148px;
+  padding: 16px 18px;
+  min-height: 130px;
 }
 .prep-card h3 {
   color: var(--blue);
-  font-size: 30px;
+  font-size: 27px;
   margin-bottom: 8px;
 }
 .prep-card p {
   margin: 0;
-  font-size: clamp(25px, 2vw, 32px);
+  font-size: clamp(21px, 1.7vw, 27px);
   line-height: 1.2;
-  font-weight: 800;
+  font-weight: 500;
 }
 .example-box {
   background: #fff7cf;
@@ -418,6 +422,67 @@ h1 {
   color: #5b6f78;
   font-size: 15px;
   font-weight: 800;
+}
+.mission-board {
+  background: rgba(255,255,255,.9);
+  border: 4px solid rgba(15,119,119,.28);
+  border-radius: 8px;
+  padding: 22px;
+  box-shadow: 0 14px 32px rgba(23,49,59,.13);
+}
+.mission-board h3 {
+  color: var(--blue);
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+.mission-board ul {
+  margin: 0;
+  padding-left: 24px;
+}
+.mission-board li {
+  font-size: clamp(21px, 1.7vw, 28px);
+  line-height: 1.22;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.teacher-window {
+  display: grid;
+  grid-template-columns: .72fr 1fr;
+  gap: 18px;
+  align-items: stretch;
+  min-height: 0;
+}
+.teacher-alert {
+  background: #17313b;
+  color: white;
+  border-radius: 8px;
+  padding: 22px;
+  border: 4px solid rgba(255,255,255,.5);
+}
+.teacher-alert h3 {
+  color: #ffcf5c;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.teacher-alert p {
+  font-size: clamp(21px, 1.7vw, 28px);
+  line-height: 1.24;
+  font-weight: 600;
+  margin: 0;
+}
+.teacher-note-list {
+  display: grid;
+  gap: 10px;
+  min-height: 0;
+}
+.teacher-note-item {
+  background: rgba(255,255,255,.92);
+  border: 3px solid rgba(23,49,59,.18);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: clamp(20px, 1.6vw, 26px);
+  line-height: 1.2;
+  font-weight: 500;
 }
 .test-shell {
   min-height: 100vh;
@@ -503,24 +568,35 @@ h1 {
   <div>
     <p class="slide-kicker">Math Champs Holiday Program Online</p>
     <h1>Online Product Showcase</h1>
-    <p class="subtitle">Final Presentasi</p>
+    <p class="subtitle">Siswa mempresentasikan produk secara online seperti membuka booth digital: nama produk, brand, slogan, logo, kemasan, harga jual, modal, dan alasan produk menarik.</p>
     <div class="tag-row"><span class='tag'>Day 5</span><span class='tag'>Final Presentation &amp; Reflection</span><span class='tag'>60 menit</span></div>
   </div>
-  <div class='slide-panel'><h3>Output Hari Ini</h3><p>Final pitch produk 5-10 menit per siswa, feedback guru, dan refleksi.</p></div>
+  
+<div class="mission-board">
+  <h3>Misi Hari Ini</h3>
+  <ul><li>Tampilkan produk atau foto produk.</li><li>Presentasi seperti booth online.</li><li>Jelaskan harga, modal, dan keunggulan.</li><li>Terima feedback dan refleksi.</li></ul>
+</div>
 </section>
 
 <section class="slide layout-content">
   <span class="time-chip">Sebelum mulai</span>
-  <div><p class="slide-kicker">Persiapan Siswa</p><h2>Peralatan Belajar yang Wajib Siap</h2><p class="subtitle">Untuk kelas online, siswa mengerjakan worksheet yang sudah diprint sebelum kelas dimulai.</p></div>
-  <div class="prep-grid"><article class='prep-card'><h3>Worksheet</h3><p>Worksheet siswa yang sudah diprint sesuai pertemuan hari ini.</p></article><article class='prep-card'><h3>Alat Tulis</h3><p>Pensil dan penghapus untuk mengisi jawaban.</p></article><article class='prep-card'><h3>Warna</h3><p>Pensil warna/spidol warna untuk logo, label, packaging, dan presentasi.</p></article><article class='prep-card'><h3>Device</h3><p>Tempat belajar yang nyaman, kamera siap, dan mikrofon digunakan saat giliran bicara.</p></article></div>
+  <div><p class="slide-kicker">Persiapan Siswa</p><h2>Peralatan Belajar Siswa</h2><p class="subtitle">Sebelum kelas dimulai, pastikan semua alat belajar sudah siap di meja.</p></div>
+  <div class="prep-grid"><article class='prep-card'><h3>Worksheet</h3><p>Worksheet siswa sudah diprint sesuai pertemuan hari ini.</p></article><article class='prep-card'><h3>Alat Tulis</h3><p>Pensil dan penghapus.</p></article><article class='prep-card'><h3>Warna</h3><p>Pensil warna atau spidol warna.</p></article><article class='prep-card'><h3>Kamera/Mikrofon</h3><p>Kamera dan mikrofon siap digunakan saat giliran bicara.</p></article></div>
+</section>
+
+<section class="slide layout-content">
+  <span class="time-chip">Day 5</span>
+  <div><p class="slide-kicker">Final Presentation &amp; Reflection</p><h2>Rangkuman Aktivitas Kelas</h2><p class="subtitle">Ini alur kegiatan yang akan kita lakukan hari ini.</p></div>
+  <div class="big-list"><div class='big-item'><span class='num-dot'>1</span><span>Menyiapkan produk/foto produk.</span></div><div class='big-item'><span class='num-dot'>2</span><span>Melakukan final presentation.</span></div><div class='big-item'><span class='num-dot'>3</span><span>Menjelaskan harga dan modal sederhana.</span></div><div class='big-item'><span class='num-dot'>4</span><span>Menerima feedback guru.</span></div><div class='big-item'><span class='num-dot'>5</span><span>Menutup program dengan refleksi.</span></div></div>
+  
 </section>
 
 <section class="slide layout-content">
   <span class="time-chip">60 menit</span>
-  <div><p class="slide-kicker">Panduan Guru</p><h2>Rundown Pertemuan 5</h2></div>
+  <div><p class="slide-kicker">Alur Kelas</p><h2>Rundown Pertemuan 5</h2></div>
   <div class="slide-panel">
 <table class="mini-table">
-  <thead><tr><th>Aktivitas</th><th>Durasi</th><th>Panduan Guru</th></tr></thead>
+  <thead><tr><th>Aktivitas</th><th>Durasi</th><th>Yang Kita Lakukan</th></tr></thead>
   <tbody><tr><td>Opening &amp; aturan showcase</td><td>5 menit</td><td>Guru menjelaskan urutan presentasi dan aturan feedback.</td></tr><tr><td>Pre Test</td><td>5 menit</td><td>Siswa mengerjakan 5 soal kesiapan presentasi dan profit sederhana.</td></tr><tr><td>Setup produk/foto</td><td>5 menit</td><td>Siswa menyiapkan kamera, foto produk, atau final presentation.</td></tr><tr><td>Final presentation</td><td>35 menit</td><td>Setiap siswa presentasi 5-10 menit, disesuaikan jumlah peserta.</td></tr><tr><td>Voting &amp; feedback</td><td>5 menit</td><td>Guru dan teman memberi apresiasi sederhana.</td></tr><tr><td>Post Test &amp; closing</td><td>5 menit</td><td>Siswa mengerjakan post test dan refleksi singkat.</td></tr></tbody>
 </table>
 </div>
@@ -528,9 +604,21 @@ h1 {
 
 <section class="slide layout-content">
   <span class="time-chip">Day 5</span>
-  <div><p class="slide-kicker">Final Presentation &amp; Reflection</p><h2>Pre Test &amp; Post Test Online</h2><p class="subtitle">Siswa mengerjakan test melalui link web. Hasilnya dipantau guru melalui spreadsheet hasil.</p></div>
-  <div class="big-list"><div class='big-item'><span class='num-dot'>1</span><span>Buka Pre Test Day 5: pre-test-day5.html sebelum materi utama.</span></div><div class='big-item'><span class='num-dot'>2</span><span>Buka Post Test Day 5: post-test-day5.html setelah kegiatan inti.</span></div><div class='big-item'><span class='num-dot'>3</span><span>Pastikan siswa mengisi Email Siswa, Nama Lengkap Siswa, Nama Guru, dan Kelas Online/Offline.</span></div><div class='big-item'><span class='num-dot'>4</span><span>Guru wajib mengecek spreadsheet hasil dan memastikan semua siswa sudah submit sebelum lanjut/menutup kelas.</span></div></div>
+  <div><p class="slide-kicker">Final Presentation &amp; Reflection</p><h2>Tujuan Belajar</h2><p class="subtitle">Di akhir pertemuan ini, siswa diharapkan bisa melakukan hal-hal berikut.</p></div>
+  <div class="big-list"><div class='big-item'><span class='num-dot'>1</span><span>Siswa bisa mempresentasikan produk dengan runtut.</span></div><div class='big-item'><span class='num-dot'>2</span><span>Siswa bisa menjelaskan harga jual dan modal sederhana.</span></div><div class='big-item'><span class='num-dot'>3</span><span>Siswa bisa menerima feedback dengan baik.</span></div><div class='big-item'><span class='num-dot'>4</span><span>Siswa bisa melakukan refleksi setelah program selesai.</span></div></div>
   
+</section>
+
+<section class="slide layout-content teacher-only">
+  <span class="time-chip">Guru saja</span>
+  <div><p class="slide-kicker">Final Presentation &amp; Reflection</p><h2>Catatan Guru</h2></div>
+  <div class="teacher-window">
+    <aside class="teacher-alert">
+      <h3>Tidak untuk siswa</h3>
+      <p>Slide ini hanya untuk guru. Jangan tampilkan slide ini saat screen share ke siswa.</p>
+    </aside>
+    <div class="teacher-note-list"><div class='teacher-note-item'>Sebelum kelas: cek link Pre Test Day 5, Post Test Day 5, dan spreadsheet hasil.</div><div class='teacher-note-item'>Pastikan siswa mengisi Email Siswa, Nama Lengkap Siswa, Nama Guru, dan Kelas Online/Offline.</div><div class='teacher-note-item'>Guru wajib mengecek spreadsheet hasil dan memastikan semua siswa sudah submit.</div><div class='teacher-note-item'>Jika waktu mepet, kurangi jumlah siswa yang sharing. Jangan menghapus kegiatan inti.</div><div class='teacher-note-item'>Siapkan urutan presentasi. Jika peserta banyak, batasi pitch 5 menit per siswa.</div></div>
+  </div>
 </section>
 
 <section class="slide layout-content">
@@ -575,8 +663,8 @@ h1 {
 
 <section class="slide layout-content">
   <span class="time-chip">Day 5</span>
-  <div><p class="slide-kicker">Final Presentation &amp; Reflection</p><h2>Rubrik Feedback Guru</h2><p class="subtitle">Guru memberi feedback singkat setelah presentasi.</p></div>
-  <div class="big-list"><div class='big-item'><span class='num-dot'>1</span><span>Ide produk jelas.</span></div><div class='big-item'><span class='num-dot'>2</span><span>Brand/logo/kemasan menarik.</span></div><div class='big-item'><span class='num-dot'>3</span><span>Harga dan modal dijelaskan.</span></div><div class='big-item'><span class='num-dot'>4</span><span>Presentasi percaya diri.</span></div><div class='big-item'><span class='num-dot'>5</span><span>Produk aman dan realistis dibuat di rumah.</span></div></div>
+  <div><p class="slide-kicker">Final Presentation &amp; Reflection</p><h2>Feedback dari Guru</h2><p class="subtitle">Setelah presentasi, guru akan memberi feedback singkat.</p></div>
+  <div class="big-list"><div class='big-item'><span class='num-dot'>1</span><span>Ide produk jelas.</span></div><div class='big-item'><span class='num-dot'>2</span><span>Brand, logo, dan kemasan menarik.</span></div><div class='big-item'><span class='num-dot'>3</span><span>Harga dan modal dijelaskan.</span></div><div class='big-item'><span class='num-dot'>4</span><span>Presentasi percaya diri.</span></div><div class='big-item'><span class='num-dot'>5</span><span>Produk aman dan realistis dibuat di rumah.</span></div></div>
   
 </section>
 
