@@ -10,8 +10,8 @@ window.MATHCHAMPS_TEST_CONFIG = {
   ],
 
   // Opsional: paste link Google Spreadsheet hasil agar mudah dibuka dari halaman setup.
-  spreadsheetUrl: "https://script.google.com/macros/s/AKfycbyTjO_4uyhwm2ANGHuOzCrNpeGIPUzrp596Z1OBvlR6mfdns5m7OHRpqkWDQ-YFQrkD/exec",
+  spreadsheetUrl: "https://docs.google.com/spreadsheets/d/1foDEIsFbBLMKY1dQNOFr8zoocYnEnauppvpMplN-RN4/edit?usp=sharing",
 
   // Opsional: jika sheet dipublish sebagai CSV, paste link CSV di sini untuk dashboard hasil.
-  resultsSheetCsvUrl: "https://script.google.com/macros/s/AKfycbyTjO_4uyhwm2ANGHuOzCrNpeGIPUzrp596Z1OBvlR6mfdns5m7OHRpqkWDQ-YFQrkD/exec"
+  resultsSheetCsvUrl: ""
 };
