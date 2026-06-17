@@ -12,10 +12,10 @@ Paket raw ini siap upload ke GitHub Pages. Materi dibuat untuk Holiday Program o
 - `pre-test-1.pdf` sampai `pre-test-5.pdf` - pre test siswa.
 - `post-test-1.pdf` sampai `post-test-5.pdf` - post test siswa.
 - `kunci-jawaban-1.pdf` sampai `kunci-jawaban-5.pdf` - kunci jawaban guru.
-- `spreadsheet-setup.html` - panduan menghubungkan test online ke Google Spreadsheet.
-- `results-dashboard.html` - dashboard ringkasan hasil pre/post test.
-- `test-config.js` - tempat mengisi URL Apps Script dan dropdown nama guru.
-- `google-apps-script-submit-results.gs` - kode Apps Script untuk menerima hasil submit.
+- `spreadsheet-setup.html` - panduan memakai dashboard hasil test online.
+- `results-dashboard.html` - dashboard hasil pre/post test realtime dengan filter dan export CSV.
+- `test-config.js` - tempat mengisi dropdown Cabang, Nama Teacher, dan konfigurasi dashboard hasil.
+- `google-apps-script-submit-results.gs` - arsip opsional untuk admin jika suatu saat dibutuhkan.
 - `worksheet-online.html` dan `worksheet-online.pdf` - worksheet siswa.
 - `spin-wheel-day1.html` - spin wheel bahan utama Day 1.
 - `final-presentation-template.html/pdf` - template presentasi akhir.
@@ -28,14 +28,12 @@ Upload semua isi folder ini ke root repository GitHub Pages. Jangan upload file 
 
 Jika struktur repo dibuat flat/root seperti paket offline terakhir, link akan langsung cocok karena semua file utama berada di root.
 
-## Setup Pre/Post Test Online
+## Pre/Post Test Online
 
-1. Buat Google Spreadsheet baru.
-2. Buka Extensions > Apps Script.
-3. Paste isi `google-apps-script-submit-results.gs`.
-4. Deploy sebagai Web App dengan akses Anyone.
-5. Copy Web App URL ke `scriptUrl` di `test-config.js`.
-6. Isi daftar guru pada bagian `teachers` di `test-config.js`.
-7. Buka `results-dashboard.html` untuk melihat ringkasan hasil.
+1. Isi daftar cabang pada bagian `branches` dan daftar teacher pada bagian `teachers` di `test-config.js`.
+2. Bagikan link pre test atau post test ke siswa sesuai pertemuan.
+3. Buka `results-dashboard.html` untuk melihat hasil submit realtime.
+4. Klik `Refresh Data` jika guru ingin mengecek jawaban yang baru masuk.
+5. Klik `Export CSV` untuk mengunduh hasil dan membukanya di Google Sheets atau Excel.
 
-Kolom tanggal dan waktu submit otomatis masuk ke spreadsheet.
+Kolom tanggal dan waktu submit otomatis tersimpan di dashboard hasil.

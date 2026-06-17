@@ -1,17 +1,26 @@
 window.MATHCHAMPS_TEST_CONFIG = {
-  // Paste URL Web App Google Apps Script di bawah ini agar hasil submit masuk ke spreadsheet.
-  scriptUrl: "https://script.google.com/macros/s/AKfycbyTjO_4uyhwm2ANGHuOzCrNpeGIPUzrp596Z1OBvlR6mfdns5m7OHRpqkWDQ-YFQrkD/exec",
-
-  // Isi nama guru secara manual di daftar ini. Nama akan muncul sebagai dropdown di halaman test.
-  teachers: [
-    "Nama Guru 1",
-    "Nama Guru 2",
-    "Nama Guru 3"
+  // Isi pilihan cabang secara manual di daftar ini. Cabang akan muncul sebagai dropdown di halaman test.
+  branches: [
+    "Cabang 1",
+    "Cabang 2",
+    "Cabang 3"
   ],
 
-  // Opsional: paste link Google Spreadsheet hasil agar mudah dibuka dari halaman setup.
-  spreadsheetUrl: "https://docs.google.com/spreadsheets/d/1foDEIsFbBLMKY1dQNOFr8zoocYnEnauppvpMplN-RN4/edit?usp=sharing",
+  // Isi nama teacher secara manual di daftar ini. Nama akan muncul sebagai dropdown di halaman test.
+  teachers: [
+    "Nama Teacher 1",
+    "Nama Teacher 2",
+    "Nama Teacher 3"
+  ],
 
-  // Opsional: jika sheet dipublish sebagai CSV, paste link CSV di sini untuk dashboard hasil.
+  // Hasil test otomatis tersimpan ke dashboard online. Bagian ini tidak perlu diubah.
+  supabaseUrl: "https://suifgsvtcbrawzdhyuhk.supabase.co",
+  storageKey: "sb_publishable_9BdHYLcpIS0B6Z92WxXf_Q_WpWBswLB",
+  resultPrefix: "api/math-champs-fnb-online-complete-results-20260617",
+
+  // Opsional: paste link Google Spreadsheet pribadi jika admin ingin menaruh arsip manual.
+  spreadsheetUrl: "",
+
+  // Opsional lama: hanya dipakai jika suatu saat ingin membaca CSV Google Sheet eksternal.
   resultsSheetCsvUrl: ""
 };

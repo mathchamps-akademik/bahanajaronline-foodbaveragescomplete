@@ -34,7 +34,7 @@ body {
     linear-gradient(180deg, #c8f3fb 0%, #a7e8f4 54%, #86dbe8 100%);
 }
 a { color: inherit; }
-.page-shell { min-height: 100vh; }
+.page-shell { min-height: 100vh; isolation: isolate; }
 .page-shell::after,
 .test-shell::after {
   content: "";
@@ -49,7 +49,7 @@ a { color: inherit; }
   pointer-events: none;
   z-index: 0;
 }
-.page-shell > *, .test-shell > * { position: relative; z-index: 1; }
+.page-shell > *, .test-shell > * { position: relative; z-index: 2; }
 .hero {
   min-height: 78vh;
   padding: 44px clamp(22px, 5vw, 78px);
@@ -59,7 +59,9 @@ a { color: inherit; }
   align-items: center;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
+.section, .test-shell { isolation: isolate; }
 .hero::before, .section::before, .test-shell::before {
   content: "";
   position: absolute;
@@ -77,6 +79,7 @@ a { color: inherit; }
     calc(90vw) 20px 0 -10px #b9993d;
   opacity: .6;
   pointer-events: none;
+  z-index: 0;
 }
 .hero::after, .section::after {
   content: "";
@@ -87,7 +90,9 @@ a { color: inherit; }
   border-radius: 50%;
   background: rgba(255,255,255,.18);
   pointer-events: none;
+  z-index: 0;
 }
+.hero > *, .section > *, .test-shell > * { position: relative; z-index: 2; }
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -560,6 +565,67 @@ h1 {
   align-items: stretch;
   min-height: 0;
 }
+.teacher-menu {
+  max-width: 1120px;
+  margin: 14px auto;
+  border: 3px solid rgba(23,49,59,.28);
+  border-radius: 8px;
+  background: rgba(255,253,248,.96);
+  box-shadow: 0 10px 22px rgba(23,49,59,.10);
+  overflow: hidden;
+}
+.teacher-menu summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 16px;
+  background: #17313b;
+  color: #ffcf5c;
+  cursor: pointer;
+  font-family: "Nunito", "Baloo 2", Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+.teacher-menu summary::-webkit-details-marker { display: none; }
+.teacher-menu summary::after {
+  content: "Buka/Tutup";
+  color: white;
+  font-size: 13px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.18);
+}
+.teacher-menu ul {
+  margin: 0;
+  padding: 16px 22px 18px 38px;
+}
+.teacher-menu li {
+  margin: 0 0 8px;
+  font-size: 18px;
+  line-height: 1.34;
+  font-weight: 600;
+}
+.teacher-menu p {
+  margin: 0;
+  padding: 16px 20px;
+  font-size: 18px;
+  line-height: 1.38;
+  font-weight: 600;
+}
+.slide .teacher-menu {
+  max-width: none;
+  margin: 0;
+}
+.slide .teacher-menu summary {
+  font-size: 26px;
+  padding: 16px 20px;
+}
+.slide .teacher-menu li {
+  font-size: clamp(20px, 1.55vw, 25px);
+  line-height: 1.22;
+}
+.embed-mode .teacher-menu { display: none; }
 .teacher-alert {
   background: #17313b;
   color: white;
@@ -609,10 +675,113 @@ h1 {
   padding: 22px;
   box-shadow: 0 14px 30px rgba(23,49,59,.12);
 }
+.test-form-shell {
+  display: block;
+}
+.test-landing {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, .76fr);
+  gap: 22px;
+  align-items: start;
+}
+.test-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  background: #fff1a7;
+  color: #735000;
+  font-weight: 900;
+}
+.test-hero-panel {
+  background: #ffffff;
+  border: 3px solid rgba(15,119,119,.22);
+  border-radius: 8px;
+  padding: 18px;
+}
+.test-hero-panel h2 {
+  color: var(--blue);
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.test-steps {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.test-steps li {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 19px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+.test-steps span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: white;
+  font-weight: 900;
+}
+.test-entry-grid {
+  margin-top: 18px;
+  grid-template-columns: 1fr;
+}
+.hidden { display: none !important; }
+.quiz-card {
+  max-width: 1040px;
+}
+.quiz-topline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.quiz-pill {
+  display: inline-flex;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #fff1a7;
+  color: #735000;
+  font-weight: 900;
+}
+.quiz-progress {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin: 14px 0 18px;
+}
+.quiz-dot {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--teal-2), var(--yellow));
+}
+.quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 18px;
+}
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
+}
+.form-grid.test-entry-grid {
+  grid-template-columns: 1fr;
 }
 .field label {
   display: block;
@@ -733,7 +902,7 @@ h1 {
   background: transparent;
 }
 @media (max-width: 980px) {
-  .hero, .cards, .two-col, .three-col, .worksheet-page, .wheel-page, .prep-grid, .form-grid, .results-summary, .filter-row, .spin-slide-grid { grid-template-columns: 1fr; }
+  .hero, .cards, .two-col, .three-col, .worksheet-page, .wheel-page, .prep-grid, .form-grid, .results-summary, .filter-row, .spin-slide-grid, .test-landing, .teacher-window { grid-template-columns: 1fr; }
   .slide { overflow: auto; height: auto; min-height: 100vh; }
 }
 @media print {
@@ -747,38 +916,67 @@ h1 {
 <body class="">
 
 <main class="test-shell">
-  <section class="test-card">
-    <p class="eyebrow">Math Champs Holiday Program Online</p>
-    <h1>Day 4 - Pre Test</h1>
-    <p class="hero-copy">Isi data diri dengan benar, lalu jawab 5 soal pilihan ganda. Siswa hanya boleh submit satu kali.</p>
-    <p><strong>Catatan untuk guru:</strong> pastikan hasil submit siswa sudah masuk ke spreadsheet hasil sebelum kelas dilanjutkan atau ditutup.</p>
-  </section>
-  <form class="test-card" id="testForm">
-    <div class="form-grid">
-      <div class="field">
-        <label for="email">Email Siswa</label>
-        <input id="email" name="email" type="email" autocomplete="email" required>
+  <form class="test-form-shell" id="testForm">
+    <section class="test-card test-landing" id="introCard">
+      <div>
+        <p class="eyebrow">Math Champs Holiday Program Online</p>
+        <span class="test-hero-badge">Day 4 | Pre Test</span>
+        <h1>Siap Mulai Pre Test?</h1>
+        <p class="hero-copy">Isi data diri dulu, lalu klik tombol mulai. Setelah masuk ke halaman soal, jawab 5 pertanyaan pilihan ganda dengan teliti.</p>
+        
+<details class="teacher-menu">
+  <summary>CATATAN GURU</summary>
+  <ul><li>Pastikan semua siswa mengisi Email Siswa, Nama Lengkap, Cabang, dan Nama Teacher sebelum mulai.</li><li>Setelah test selesai, guru membuka dashboard hasil dan klik Refresh Data sampai nama siswa muncul.</li><li>Jika siswa salah memilih cabang/teacher, minta siswa menghubungi guru sebelum submit ulang.</li></ul>
+</details>
+
       </div>
-      <div class="field">
-        <label for="studentName">Nama Lengkap Siswa</label>
-        <input id="studentName" name="studentName" type="text" autocomplete="name" required>
+      <div class="test-hero-panel">
+        <h2>Data Siswa</h2>
+        <ul class="test-steps">
+          <li><span>1</span><strong>Isi identitas dengan benar.</strong></li>
+          <li><span>2</span><strong>Klik Mulai Test.</strong></li>
+          <li><span>3</span><strong>Jawab semua soal, lalu submit satu kali.</strong></li>
+        </ul>
+        <div class="form-grid test-entry-grid">
+          <div class="field">
+            <label for="email">Email Siswa</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="nama@email.com" required>
+          </div>
+          <div class="field">
+            <label for="studentName">Nama Lengkap</label>
+            <input id="studentName" name="studentName" type="text" autocomplete="name" placeholder="Tulis nama lengkap" required>
+          </div>
+          <div class="field">
+            <label for="branchName">Cabang</label>
+            <select id="branchName" name="branchName" required>
+              <option value="">Pilih cabang</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="teacherName">Nama Teacher</label>
+            <select id="teacherName" name="teacherName" required>
+              <option value="">Pilih teacher</option>
+            </select>
+          </div>
+        </div>
+        <div class="quiz-actions">
+          <button class="button" type="button" id="startButton">Mulai Test</button>
+          <div class="status-box" id="statusBox" role="status"></div>
+        </div>
       </div>
-      <div class="field">
-        <label for="teacherName">Nama Guru</label>
-        <select id="teacherName" name="teacherName" required>
-          <option value="">Pilih nama guru</option>
-        </select>
+    </section>
+    <section class="test-card quiz-card hidden" id="quizCard">
+      <div class="quiz-topline">
+        <span class="quiz-pill">Day 4</span>
+        <span class="quiz-pill">Pre Test</span>
+        <span class="quiz-pill" id="quizStudent">Siswa</span>
       </div>
-      <div class="field">
-        <label for="classMode">Kelas Online atau Offline</label>
-        <select id="classMode" name="classMode" required>
-          <option value="">Pilih kelas</option>
-          <option value="Online">Online</option>
-          <option value="Offline">Offline</option>
-        </select>
+      <h1>Pre Test Day 4</h1>
+      <p class="hero-copy">Pilih satu jawaban yang paling tepat. Baca pelan-pelan, tidak perlu terburu-buru.</p>
+      <div class="quiz-progress" aria-hidden="true">
+        <span class="quiz-dot"></span><span class="quiz-dot"></span><span class="quiz-dot"></span><span class="quiz-dot"></span><span class="quiz-dot"></span>
       </div>
-    </div>
-    
+      
 <section class="question-card">
   <h3>1. Kemasan produk adalah ...</h3>
   
@@ -879,8 +1077,11 @@ h1 {
   <strong>D.</strong> Tidak menyebut produk
 </label>
 </section>
-    <button class="button" type="submit" style="margin-top:18px">Submit Jawaban</button>
-    <div class="status-box" id="statusBox" role="status"></div>
+      <div class="quiz-actions">
+        <button class="button" type="submit">Submit Jawaban</button>
+        <div class="status-box" id="quizStatusBox" role="status"></div>
+      </div>
+    </section>
   </form>
 </main>
 <script src="test-config.js"></script>
@@ -888,19 +1089,28 @@ h1 {
 const TEST_META = {
   testId: "day4-pre",
   day: 4,
+  kindId: "pre",
   kind: "Pre Test",
-  answerKey: {"q1": "A", "q2": "A", "q3": "A", "q4": "A", "q5": "A"}
+  answerKey: {"q1": "A", "q2": "A", "q3": "A", "q4": "A", "q5": "A"},
+  questions: [{"question": "Kemasan produk adalah ...", "choices": ["Wadah atau tampilan luar produk", "Nama kelas", "Rumus panjang", "Jam pulang"], "answer": "A"}, {"question": "Poster promosi dibuat untuk ...", "choices": ["Menarik perhatian pembeli", "Menyembunyikan produk", "Menghapus brand", "Mengganti modal"], "answer": "A"}, {"question": "Kalimat promosi yang baik sebaiknya ...", "choices": ["Jelas, singkat, dan sopan", "Membingungkan", "Terlalu panjang", "Menyembunyikan produk"], "answer": "A"}, {"question": "Sebelum membuat produk di rumah, siswa perlu ...", "choices": ["Izin dan bantuan orang tua/wali", "Bermain api sendiri", "Tidak cuci tangan", "Membeli bahan tanpa bertanya"], "answer": "A"}, {"question": "Saat menawarkan produk, sikap yang baik adalah ...", "choices": ["Ramah dan percaya diri", "Marah kepada pembeli", "Berbisik terlalu pelan", "Tidak menyebut produk"], "answer": "A"}]
 };
 const config = window.MATHCHAMPS_TEST_CONFIG || {};
 const teacherSelect = document.getElementById("teacherName");
+const branchSelect = document.getElementById("branchName");
+(config.branches || []).forEach((name) => {
+  const opt = document.createElement("option");
+  opt.value = name;
+  opt.textContent = name;
+  branchSelect.appendChild(opt);
+});
 (config.teachers || []).forEach((name) => {
   const opt = document.createElement("option");
   opt.value = name;
   opt.textContent = name;
   teacherSelect.appendChild(opt);
 });
-function setStatus(type, message) {
-  const box = document.getElementById("statusBox");
+function setStatus(type, message, targetId = "statusBox") {
+  const box = document.getElementById(targetId);
   box.className = `status-box ${type}`;
   box.textContent = message;
 }
@@ -912,46 +1122,169 @@ function collectAnswers(form) {
   return answers;
 }
 function calculateScore(answers) {
-  return Object.entries(TEST_META.answerKey).reduce((score, [key, correct]) => score + (answers[key] === correct ? 20 : 0), 0);
+  const total = Object.keys(TEST_META.answerKey).length || 1;
+  const correct = Object.entries(TEST_META.answerKey).reduce((count, [key, answer]) => count + (answers[key] === answer ? 1 : 0), 0);
+  return Math.round((correct / total) * 100);
 }
+function countCorrect(answers) {
+  return Object.entries(TEST_META.answerKey).reduce((count, [key, answer]) => count + (answers[key] === answer ? 1 : 0), 0);
+}
+function csvSafe(value) {
+  return String(value ?? "").replace(/[\n\r]+/g, " ").trim();
+}
+function studentKey(email) {
+  return `${TEST_META.testId}|${String(email || "").trim().toLowerCase()}`;
+}
+function resultPrefix() {
+  return `${config.resultPrefix}/day${TEST_META.day}/${TEST_META.kindId}`;
+}
+function requireStorageConfig() {
+  return Boolean(config.supabaseUrl && config.storageKey && config.resultPrefix);
+}
+async function listExistingResults() {
+  if (!requireStorageConfig()) return [];
+  const response = await fetch(`${config.supabaseUrl}/storage/v1/object/list/html-pages`, {
+    method: "POST",
+    headers: {
+      apikey: config.storageKey,
+      Authorization: `Bearer ${config.storageKey}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      prefix: resultPrefix(),
+      limit: 1000,
+      offset: 0,
+      sortBy: { column: "created_at", order: "desc" }
+    })
+  });
+  if (!response.ok) throw new Error(await response.text());
+  const files = await response.json();
+  const rows = [];
+  for (const file of files.filter((item) => item.name && item.name.endsWith(".json"))) {
+    const url = `${config.supabaseUrl}/storage/v1/object/public/html-pages/${resultPrefix()}/${file.name}?v=${Date.now()}`;
+    const itemResponse = await fetch(url);
+    if (itemResponse.ok) rows.push(await itemResponse.json());
+  }
+  return rows;
+}
+async function hasAlreadySubmitted(email) {
+  const key = studentKey(email);
+  if (localStorage.getItem(`mathchamps-online-submitted:${key}`)) return true;
+  const existing = await listExistingResults();
+  return existing.some((row) => {
+    const rowEmail = String(row.email || row["Email Siswa"] || "").trim().toLowerCase();
+    const rowTestId = String(row.testId || row.test_id || "");
+    return (row.student_key && row.student_key === key) || (rowEmail === String(email).trim().toLowerCase() && rowTestId === TEST_META.testId);
+  });
+}
+async function saveResponse(payload) {
+  if (!requireStorageConfig()) throw new Error("Konfigurasi storage hasil belum lengkap di test-config.js.");
+  const random = Math.random().toString(36).slice(2, 10);
+  const fileName = `${Date.now()}-${random}.json`;
+  const objectPath = `${resultPrefix()}/${fileName}`;
+  const response = await fetch(`${config.supabaseUrl}/storage/v1/object/html-pages/${objectPath}`, {
+    method: "POST",
+    headers: {
+      apikey: config.storageKey,
+      Authorization: `Bearer ${config.storageKey}`,
+      "Content-Type": "application/json",
+      "x-upsert": "false"
+    },
+    body: JSON.stringify(payload)
+  });
+  if (!response.ok) throw new Error(await response.text());
+  return fileName;
+}
+document.getElementById("startButton").addEventListener("click", async () => {
+  const form = document.getElementById("testForm");
+  const email = form.email.value.trim().toLowerCase();
+  const name = csvSafe(form.studentName.value);
+  const branch = form.branchName.value;
+  const teacher = form.teacherName.value;
+  const startButton = document.getElementById("startButton");
+  if (!email || !name || !branch || !teacher) {
+    setStatus("warn", "Isi Email Siswa, Nama Lengkap, Cabang, dan Nama Teacher dulu ya.");
+    return;
+  }
+  startButton.disabled = true;
+  setStatus("warn", "Mengecek data siswa...");
+  try {
+    if (await hasAlreadySubmitted(email)) {
+      setStatus("warn", "Data email ini sudah pernah submit test ini. Jika ada kesalahan, hubungi guru.");
+      startButton.disabled = false;
+      return;
+    }
+    document.getElementById("quizStudent").textContent = `${name} | ${branch}`;
+    document.getElementById("introCard").classList.add("hidden");
+    document.getElementById("quizCard").classList.remove("hidden");
+    window.scrollTo(0, 0);
+  } catch (error) {
+    console.error(error);
+    setStatus("err", "Belum bisa mengecek data. Cek koneksi internet lalu coba lagi.");
+    startButton.disabled = false;
+  }
+});
 document.getElementById("testForm").addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = event.currentTarget;
   const email = form.email.value.trim().toLowerCase();
-  const lockKey = `mathchamps-submitted:${TEST_META.testId}:${email}`;
-  if (localStorage.getItem(lockKey)) {
-    setStatus("warn", "Kamu sudah pernah submit test ini dari device/browser ini. Jika ada kesalahan, hubungi guru.");
+  if (!email || !form.studentName.value.trim() || !form.branchName.value || !form.teacherName.value) {
+    setStatus("warn", "Isi data diri dulu ya sebelum submit.", "quizStatusBox");
     return;
   }
   const answers = collectAnswers(form);
-  const payload = {
-    submittedAt: new Date().toISOString(),
-    testId: TEST_META.testId,
-    day: TEST_META.day,
-    kind: TEST_META.kind,
-    email,
-    studentName: form.studentName.value.trim(),
-    teacherName: form.teacherName.value,
-    classMode: form.classMode.value,
-    score: calculateScore(answers),
-    answers
-  };
-  if (!config.scriptUrl) {
-    setStatus("warn", "Jawaban belum terkirim ke spreadsheet karena URL Apps Script belum dipasang di test-config.js. Minta admin/guru mengecek setup.");
+  if (Object.values(answers).some((answer) => !answer)) {
+    setStatus("warn", "Masih ada soal yang belum dijawab.", "quizStatusBox");
     return;
   }
+  const submitButton = form.querySelector("button[type='submit']");
+  submitButton.disabled = true;
+  setStatus("warn", "Mengecek dan menyimpan jawaban ke spreadsheet hasil...", "quizStatusBox");
   try {
-    await fetch(config.scriptUrl, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(payload)
-    });
-    localStorage.setItem(lockKey, "1");
-    form.querySelector("button[type='submit']").disabled = true;
-    setStatus("ok", "Jawaban sudah dikirim. Terima kasih, hasilmu akan dicek guru di spreadsheet.");
+    if (await hasAlreadySubmitted(email)) {
+      setStatus("warn", "Kamu sudah pernah submit test ini. Jika ada kesalahan, hubungi guru.", "quizStatusBox");
+      submitButton.disabled = false;
+      return;
+    }
+    const now = new Date();
+    const score = calculateScore(answers);
+    const correct = countCorrect(answers);
+    const answerLabels = Object.keys(TEST_META.answerKey).map((key) => answers[key]);
+    const payload = {
+      submitted_at: now.toISOString(),
+      submittedAt: now.toISOString(),
+      submitted_date: now.toLocaleDateString("id-ID", { timeZone: "Asia/Jakarta", day: "2-digit", month: "short", year: "numeric" }),
+      submitted_time: now.toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta", hour: "2-digit", minute: "2-digit", second: "2-digit" }),
+      program: "Math Champs F&B Online",
+      meeting: TEST_META.day,
+      day: TEST_META.day,
+      kind: TEST_META.kindId,
+      kind_label: TEST_META.kind,
+      testId: TEST_META.testId,
+      test_id: TEST_META.testId,
+      email,
+      name: csvSafe(form.studentName.value),
+      studentName: csvSafe(form.studentName.value),
+      branch: form.branchName.value,
+      branchName: form.branchName.value,
+      className: form.branchName.value,
+      classMode: "Online",
+      teacher: form.teacherName.value,
+      teacherName: form.teacherName.value,
+      correct,
+      score,
+      student_key: studentKey(email),
+      answers,
+      answer_labels: answerLabels,
+      questions: TEST_META.questions.map((question) => question.question)
+    };
+    await saveResponse(payload);
+    localStorage.setItem(`mathchamps-online-submitted:${studentKey(email)}`, "1");
+    setStatus("ok", `Jawaban tersimpan. Skor kamu: ${score}. Guru bisa melihat hasilnya di spreadsheet hasil.`, "quizStatusBox");
   } catch (error) {
-    setStatus("err", "Jawaban belum berhasil dikirim. Cek koneksi internet lalu coba lagi.");
+    console.error(error);
+    setStatus("err", "Jawaban belum berhasil tersimpan. Cek koneksi internet lalu coba submit lagi.", "quizStatusBox");
+    submitButton.disabled = false;
   }
 });
 </script>

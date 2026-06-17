@@ -34,7 +34,7 @@ body {
     linear-gradient(180deg, #c8f3fb 0%, #a7e8f4 54%, #86dbe8 100%);
 }
 a { color: inherit; }
-.page-shell { min-height: 100vh; }
+.page-shell { min-height: 100vh; isolation: isolate; }
 .page-shell::after,
 .test-shell::after {
   content: "";
@@ -49,7 +49,7 @@ a { color: inherit; }
   pointer-events: none;
   z-index: 0;
 }
-.page-shell > *, .test-shell > * { position: relative; z-index: 1; }
+.page-shell > *, .test-shell > * { position: relative; z-index: 2; }
 .hero {
   min-height: 78vh;
   padding: 44px clamp(22px, 5vw, 78px);
@@ -59,7 +59,9 @@ a { color: inherit; }
   align-items: center;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
+.section, .test-shell { isolation: isolate; }
 .hero::before, .section::before, .test-shell::before {
   content: "";
   position: absolute;
@@ -77,6 +79,7 @@ a { color: inherit; }
     calc(90vw) 20px 0 -10px #b9993d;
   opacity: .6;
   pointer-events: none;
+  z-index: 0;
 }
 .hero::after, .section::after {
   content: "";
@@ -87,7 +90,9 @@ a { color: inherit; }
   border-radius: 50%;
   background: rgba(255,255,255,.18);
   pointer-events: none;
+  z-index: 0;
 }
+.hero > *, .section > *, .test-shell > * { position: relative; z-index: 2; }
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -560,6 +565,67 @@ h1 {
   align-items: stretch;
   min-height: 0;
 }
+.teacher-menu {
+  max-width: 1120px;
+  margin: 14px auto;
+  border: 3px solid rgba(23,49,59,.28);
+  border-radius: 8px;
+  background: rgba(255,253,248,.96);
+  box-shadow: 0 10px 22px rgba(23,49,59,.10);
+  overflow: hidden;
+}
+.teacher-menu summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 16px;
+  background: #17313b;
+  color: #ffcf5c;
+  cursor: pointer;
+  font-family: "Nunito", "Baloo 2", Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+.teacher-menu summary::-webkit-details-marker { display: none; }
+.teacher-menu summary::after {
+  content: "Buka/Tutup";
+  color: white;
+  font-size: 13px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.18);
+}
+.teacher-menu ul {
+  margin: 0;
+  padding: 16px 22px 18px 38px;
+}
+.teacher-menu li {
+  margin: 0 0 8px;
+  font-size: 18px;
+  line-height: 1.34;
+  font-weight: 600;
+}
+.teacher-menu p {
+  margin: 0;
+  padding: 16px 20px;
+  font-size: 18px;
+  line-height: 1.38;
+  font-weight: 600;
+}
+.slide .teacher-menu {
+  max-width: none;
+  margin: 0;
+}
+.slide .teacher-menu summary {
+  font-size: 26px;
+  padding: 16px 20px;
+}
+.slide .teacher-menu li {
+  font-size: clamp(20px, 1.55vw, 25px);
+  line-height: 1.22;
+}
+.embed-mode .teacher-menu { display: none; }
 .teacher-alert {
   background: #17313b;
   color: white;
@@ -609,10 +675,113 @@ h1 {
   padding: 22px;
   box-shadow: 0 14px 30px rgba(23,49,59,.12);
 }
+.test-form-shell {
+  display: block;
+}
+.test-landing {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, .76fr);
+  gap: 22px;
+  align-items: start;
+}
+.test-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  background: #fff1a7;
+  color: #735000;
+  font-weight: 900;
+}
+.test-hero-panel {
+  background: #ffffff;
+  border: 3px solid rgba(15,119,119,.22);
+  border-radius: 8px;
+  padding: 18px;
+}
+.test-hero-panel h2 {
+  color: var(--blue);
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.test-steps {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.test-steps li {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 19px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+.test-steps span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: white;
+  font-weight: 900;
+}
+.test-entry-grid {
+  margin-top: 18px;
+  grid-template-columns: 1fr;
+}
+.hidden { display: none !important; }
+.quiz-card {
+  max-width: 1040px;
+}
+.quiz-topline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.quiz-pill {
+  display: inline-flex;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #fff1a7;
+  color: #735000;
+  font-weight: 900;
+}
+.quiz-progress {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin: 14px 0 18px;
+}
+.quiz-dot {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--teal-2), var(--yellow));
+}
+.quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 18px;
+}
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
+}
+.form-grid.test-entry-grid {
+  grid-template-columns: 1fr;
 }
 .field label {
   display: block;
@@ -733,7 +902,7 @@ h1 {
   background: transparent;
 }
 @media (max-width: 980px) {
-  .hero, .cards, .two-col, .three-col, .worksheet-page, .wheel-page, .prep-grid, .form-grid, .results-summary, .filter-row, .spin-slide-grid { grid-template-columns: 1fr; }
+  .hero, .cards, .two-col, .three-col, .worksheet-page, .wheel-page, .prep-grid, .form-grid, .results-summary, .filter-row, .spin-slide-grid, .test-landing, .teacher-window { grid-template-columns: 1fr; }
   .slide { overflow: auto; height: auto; min-height: 100vh; }
 }
 @media print {
@@ -749,14 +918,21 @@ h1 {
 <main class="test-shell">
   <section class="test-card">
     <p class="eyebrow">Math Champs Holiday Program Online</p>
-    <h1>Dashboard Hasil Pre Test & Post Test</h1>
-    <p class="hero-copy">Gunakan halaman ini untuk memantau hasil submit siswa. Data dapat dibaca dari Apps Script atau CSV Google Sheet yang dipasang di <code>test-config.js</code>.</p>
+    <h1>Spreadsheet Hasil Pre Test & Post Test</h1>
+    <p class="hero-copy">Halaman ini menampilkan jawaban siswa yang masuk dari form online. Guru bisa filter data dan export CSV untuk dibuka di Google Sheets atau Excel.</p>
+    
+<details class="teacher-menu">
+  <summary>CATATAN GURU</summary>
+  <ul><li>Dashboard ini untuk guru/admin, bukan untuk siswa.</li><li>Klik Refresh Data setelah siswa selesai submit.</li><li>Jika nama siswa belum muncul, minta siswa cek koneksi dan pastikan submit berhasil.</li></ul>
+</details>
+
     <div class="button-row">
-      <a class="button" href="spreadsheet-setup.html">Panduan Setup</a>
-      <a class="button secondary" id="spreadsheetLink" href="#" target="_blank" rel="noopener">Buka Spreadsheet</a>
       <button class="button light" type="button" id="refreshBtn">Refresh Data</button>
+      <button class="button secondary" type="button" id="exportBtn">Export CSV</button>
+      <a class="button" href="spreadsheet-setup.html">Panduan Hasil</a>
+      <a class="button secondary" id="spreadsheetLink" href="#" target="_blank" rel="noopener">Buka Spreadsheet Arsip</a>
     </div>
-    <div class="status-box warn" id="resultsStatus">Memuat data hasil...</div>
+    <div class="status-box warn" id="resultsStatus">Belum memuat data.</div>
   </section>
 
   <section class="results-summary">
@@ -788,11 +964,11 @@ h1 {
         </select>
       </div>
       <div class="field">
-        <label for="teacherFilter">Nama Guru</label>
-        <input id="teacherFilter" type="text" placeholder="Cari guru">
+        <label for="teacherFilter">Nama Teacher</label>
+        <input id="teacherFilter" type="text" placeholder="Cari teacher">
       </div>
       <div class="field">
-        <label for="studentFilter">Nama Siswa</label>
+        <label for="studentFilter">Nama / Email / Cabang</label>
         <input id="studentFilter" type="text" placeholder="Cari siswa">
       </div>
     </div>
@@ -808,13 +984,14 @@ h1 {
           <th>Jenis</th>
           <th>Nama Siswa</th>
           <th>Email</th>
-          <th>Guru</th>
-          <th>Kelas</th>
+          <th>Cabang</th>
+          <th>Teacher</th>
           <th>Nilai</th>
+          <th>Jawaban</th>
         </tr>
       </thead>
       <tbody id="resultsBody">
-        <tr><td colspan="9">Belum ada data.</td></tr>
+        <tr><td colspan="10">Belum ada data.</td></tr>
       </tbody>
     </table>
   </section>
@@ -831,6 +1008,35 @@ else spreadsheetLink.style.display = "none";
 function setResultStatus(type, message) {
   statusBox.className = `status-box ${type}`;
   statusBox.textContent = message;
+}
+function labelKind(kind) {
+  const text = String(kind || "").toLowerCase();
+  if (text.includes("post")) return "Post Test";
+  return "Pre Test";
+}
+function normalizeKindId(kind) {
+  return labelKind(kind) === "Post Test" ? "post" : "pre";
+}
+function formatDate(value) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("id-ID", { timeZone: "Asia/Jakarta", day: "2-digit", month: "short", year: "numeric" });
+}
+function formatTime(value) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta", hour: "2-digit", minute: "2-digit", second: "2-digit" });
+}
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (ch) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  }[ch]));
 }
 function parseCsv(text) {
   const rows = [];
@@ -850,16 +1056,26 @@ function parseCsv(text) {
   return rows.map(r => Object.fromEntries(headers.map((h, i) => [h, r[i] || ""])));
 }
 function normalize(row) {
+  const submittedAt = row.submitted_at || row.submittedAt || row["Timestamp Client"] || "";
+  const kind = labelKind(row.kind_label || row.kind || row["Jenis Test"] || row["Jenis"] || "");
+  const answers = row.answer_labels || row.answerLabels || row.answers || "";
+  let answerText = "";
+  if (Array.isArray(answers)) answerText = answers.join(", ");
+  else if (answers && typeof answers === "object") answerText = Object.values(answers).join(", ");
+  else answerText = String(answers || "");
   return {
-    date: row["Tanggal Submit"] || row["Tanggal"] || "",
-    time: row["Waktu Submit"] || row["Waktu"] || "",
-    day: String(row["Pertemuan"] || row["Day"] || "").replace("Day ", ""),
-    kind: row["Jenis Test"] || row["Jenis"] || "",
-    email: row["Email Siswa"] || row["Email"] || "",
-    student: row["Nama Lengkap Siswa"] || row["Nama Siswa"] || "",
-    teacher: row["Nama Guru"] || row["Guru"] || "",
-    classMode: row["Kelas Online/Offline"] || row["Kelas"] || "",
-    score: Number(row["Nilai"] || row["Score"] || 0)
+    date: row.submitted_date || row["Tanggal Submit"] || row["Tanggal"] || formatDate(submittedAt),
+    time: row.submitted_time || row["Waktu Submit"] || row["Waktu"] || formatTime(submittedAt),
+    submittedAt,
+    day: String(row.meeting || row.day || row["Pertemuan"] || row["Day"] || "").replace("Day ", ""),
+    kind,
+    kindId: normalizeKindId(kind),
+    email: row.email || row["Email Siswa"] || row["Email"] || "",
+    student: row.name || row.studentName || row["Nama Lengkap Siswa"] || row["Nama Siswa"] || "",
+    teacher: row.teacher || row.teacherName || row["Nama Teacher"] || row["Nama Guru"] || row["Guru"] || "",
+    classMode: row.branch || row.branchName || row.className || row.classMode || row["Cabang"] || row["Kelas Online/Offline"] || row["Kelas"] || "",
+    score: Number(row.score ?? row["Nilai"] ?? row["Score"] ?? 0),
+    answerText
   };
 }
 function filteredRows() {
@@ -871,7 +1087,7 @@ function filteredRows() {
     (!day || row.day === day) &&
     (!kind || row.kind === kind) &&
     (!teacher || row.teacher.toLowerCase().includes(teacher)) &&
-    (!student || row.student.toLowerCase().includes(student))
+    (!student || `${row.student} ${row.email} ${row.classMode}`.toLowerCase().includes(student))
   );
 }
 function render() {
@@ -883,59 +1099,122 @@ function render() {
   document.getElementById("avgScore").textContent = avg;
   const body = document.getElementById("resultsBody");
   if (!rows.length) {
-    body.innerHTML = '<tr><td colspan="9">Belum ada data yang sesuai filter.</td></tr>';
+    body.innerHTML = '<tr><td colspan="10">Belum ada data yang sesuai filter.</td></tr>';
     return;
   }
-  body.innerHTML = rows.slice().reverse().map(row => `
+  body.innerHTML = rows.map(row => `
     <tr>
-      <td>${row.date}</td>
-      <td>${row.time}</td>
-      <td>Day ${row.day}</td>
-      <td>${row.kind}</td>
-      <td>${row.student}</td>
-      <td>${row.email}</td>
-      <td>${row.teacher}</td>
-      <td>${row.classMode}</td>
+      <td>${escapeHtml(row.date)}</td>
+      <td>${escapeHtml(row.time)}</td>
+      <td>Day ${escapeHtml(row.day)}</td>
+      <td><span class="duration">${escapeHtml(row.kind)}</span></td>
+      <td>${escapeHtml(row.student)}</td>
+      <td>${escapeHtml(row.email)}</td>
+      <td>${escapeHtml(row.classMode)}</td>
+      <td>${escapeHtml(row.teacher)}</td>
       <td><strong>${row.score}</strong></td>
+      <td>${escapeHtml(row.answerText)}</td>
     </tr>
   `).join("");
 }
-function loadJsonp(url) {
-  return new Promise((resolve, reject) => {
-    const callback = "mathChampsResults_" + Date.now();
-    window[callback] = (data) => { delete window[callback]; script.remove(); resolve(data.rows || []); };
-    const script = document.createElement("script");
-    script.src = url + (url.includes("?") ? "&" : "?") + "callback=" + callback;
-    script.onerror = () => { delete window[callback]; reject(new Error("Gagal memuat Apps Script.")); };
-    document.body.appendChild(script);
+async function listStoredResults(day, kindId) {
+  const prefix = `${config.resultPrefix}/day${day}/${kindId}`;
+  const response = await fetch(`${config.supabaseUrl}/storage/v1/object/list/html-pages`, {
+    method: "POST",
+    headers: {
+      apikey: config.storageKey,
+      Authorization: `Bearer ${config.storageKey}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      prefix,
+      limit: 1000,
+      offset: 0,
+      sortBy: { column: "created_at", order: "desc" }
+    })
   });
+  if (!response.ok) throw new Error(await response.text());
+  const files = await response.json();
+  const rows = [];
+  for (const file of files.filter((item) => item.name && item.name.endsWith(".json"))) {
+    const url = `${config.supabaseUrl}/storage/v1/object/public/html-pages/${prefix}/${file.name}?v=${Date.now()}`;
+    const itemResponse = await fetch(url);
+    if (itemResponse.ok) rows.push(await itemResponse.json());
+  }
+  return rows;
+}
+async function loadStorageRows() {
+  if (!config.supabaseUrl || !config.storageKey || !config.resultPrefix) {
+    throw new Error("Konfigurasi penyimpanan hasil belum lengkap di test-config.js.");
+  }
+  const tasks = [];
+  for (let day = 1; day <= 5; day++) {
+    tasks.push(listStoredResults(day, "pre"));
+    tasks.push(listStoredResults(day, "post"));
+  }
+  const chunks = await Promise.all(tasks);
+  return chunks.flat();
+}
+function toCsvValue(value) {
+  return `"${String(value ?? "").replace(/"/g, '""')}"`;
+}
+function exportCsv() {
+  const rows = filteredRows();
+  const header = ["tanggal_submit", "waktu_submit", "submitted_at_iso", "pertemuan", "jenis_test", "nama_siswa", "email", "cabang", "nama_teacher", "nilai", "jawaban"];
+  const lines = [header.map(toCsvValue).join(",")];
+  rows.forEach((row) => {
+    lines.push([
+      row.date,
+      row.time,
+      row.submittedAt,
+      `Day ${row.day}`,
+      row.kind,
+      row.student,
+      row.email,
+      row.classMode,
+      row.teacher,
+      row.score,
+      row.answerText
+    ].map(toCsvValue).join(","));
+  });
+  const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "hasil-pre-post-test-mathpreneur-online.csv";
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 async function loadResults() {
   try {
     setResultStatus("warn", "Memuat data hasil...");
     let rows = [];
-    if (config.resultsSheetCsvUrl) {
+    if (config.supabaseUrl && config.storageKey && config.resultPrefix) {
+      rows = await loadStorageRows();
+    } else if (config.resultsSheetCsvUrl) {
       const res = await fetch(config.resultsSheetCsvUrl);
       rows = parseCsv(await res.text());
-    } else if (config.scriptUrl) {
-      rows = await loadJsonp(config.scriptUrl);
     } else {
-      setResultStatus("warn", "Belum ada sumber data. Isi scriptUrl atau resultsSheetCsvUrl di test-config.js.");
+      setResultStatus("warn", "Belum ada sumber data. Cek konfigurasi hasil di test-config.js.");
       allRows = [];
       render();
       return;
     }
-    allRows = rows.map(normalize).filter(r => r.student || r.email);
+    allRows = rows.map(normalize)
+      .filter(r => r.student || r.email)
+      .filter(r => !String(r.student).toUpperCase().startsWith("TEST CODEX") && !String(r.student).toUpperCase().includes("CODEX QA"))
+      .sort((a, b) => String(b.submittedAt || `${b.date} ${b.time}`).localeCompare(String(a.submittedAt || `${a.date} ${a.time}`)));
     setResultStatus("ok", `Data berhasil dimuat: ${allRows.length} submit.`);
     render();
   } catch (error) {
-    setResultStatus("err", "Data belum berhasil dimuat. Cek setup Apps Script/CSV dan koneksi internet.");
+    console.error(error);
+    setResultStatus("err", "Data belum berhasil dimuat. Cek koneksi internet atau konfigurasi hasil di test-config.js.");
   }
 }
 ["dayFilter", "kindFilter", "teacherFilter", "studentFilter"].forEach(id => {
   document.getElementById(id).addEventListener("input", render);
 });
 document.getElementById("refreshBtn").addEventListener("click", loadResults);
+document.getElementById("exportBtn").addEventListener("click", exportCsv);
 loadResults();
 </script>
 
