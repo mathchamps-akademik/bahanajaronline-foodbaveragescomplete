@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Day 3 - Pre Test</title>
+  <title>Dashboard Hasil Test</title>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@700;800;900&display=swap');
 :root {
@@ -749,211 +749,194 @@ h1 {
 <main class="test-shell">
   <section class="test-card">
     <p class="eyebrow">Math Champs Holiday Program Online</p>
-    <h1>Day 3 - Pre Test</h1>
-    <p class="hero-copy">Isi data diri dengan benar, lalu jawab 5 soal pilihan ganda. Siswa hanya boleh submit satu kali.</p>
-    <p><strong>Catatan untuk guru:</strong> pastikan hasil submit siswa sudah masuk ke spreadsheet hasil sebelum kelas dilanjutkan atau ditutup.</p>
+    <h1>Dashboard Hasil Pre Test & Post Test</h1>
+    <p class="hero-copy">Gunakan halaman ini untuk memantau hasil submit siswa. Data dapat dibaca dari Apps Script atau CSV Google Sheet yang dipasang di <code>test-config.js</code>.</p>
+    <div class="button-row">
+      <a class="button" href="spreadsheet-setup.html">Panduan Setup</a>
+      <a class="button secondary" id="spreadsheetLink" href="#" target="_blank" rel="noopener">Buka Spreadsheet</a>
+      <button class="button light" type="button" id="refreshBtn">Refresh Data</button>
+    </div>
+    <div class="status-box warn" id="resultsStatus">Memuat data hasil...</div>
   </section>
-  <form class="test-card" id="testForm">
-    <div class="form-grid">
+
+  <section class="results-summary">
+    <article class="metric-card"><strong id="totalSubmits">0</strong><span>Total submit</span></article>
+    <article class="metric-card"><strong id="avgScore">0</strong><span>Rata-rata nilai</span></article>
+    <article class="metric-card"><strong id="preCount">0</strong><span>Pre Test</span></article>
+    <article class="metric-card"><strong id="postCount">0</strong><span>Post Test</span></article>
+  </section>
+
+  <section class="test-card">
+    <div class="filter-row">
       <div class="field">
-        <label for="email">Email Siswa</label>
-        <input id="email" name="email" type="email" autocomplete="email" required>
-      </div>
-      <div class="field">
-        <label for="studentName">Nama Lengkap Siswa</label>
-        <input id="studentName" name="studentName" type="text" autocomplete="name" required>
-      </div>
-      <div class="field">
-        <label for="teacherName">Nama Guru</label>
-        <select id="teacherName" name="teacherName" required>
-          <option value="">Pilih nama guru</option>
+        <label for="dayFilter">Pertemuan</label>
+        <select id="dayFilter">
+          <option value="">Semua</option>
+          <option value="1">Day 1</option>
+          <option value="2">Day 2</option>
+          <option value="3">Day 3</option>
+          <option value="4">Day 4</option>
+          <option value="5">Day 5</option>
         </select>
       </div>
       <div class="field">
-        <label for="classMode">Kelas Online atau Offline</label>
-        <select id="classMode" name="classMode" required>
-          <option value="">Pilih kelas</option>
-          <option value="Online">Online</option>
-          <option value="Offline">Offline</option>
+        <label for="kindFilter">Jenis Test</label>
+        <select id="kindFilter">
+          <option value="">Semua</option>
+          <option value="Pre Test">Pre Test</option>
+          <option value="Post Test">Post Test</option>
         </select>
+      </div>
+      <div class="field">
+        <label for="teacherFilter">Nama Guru</label>
+        <input id="teacherFilter" type="text" placeholder="Cari guru">
+      </div>
+      <div class="field">
+        <label for="studentFilter">Nama Siswa</label>
+        <input id="studentFilter" type="text" placeholder="Cari siswa">
       </div>
     </div>
-    
-<section class="question-card">
-  <h3>1. Modal adalah ...</h3>
-  
-<label class="option-label">
-  <input type="radio" name="q1" value="A" required>
-  <strong>A.</strong> Biaya untuk membuat produk
-</label>
-<label class="option-label">
-  <input type="radio" name="q1" value="B" required>
-  <strong>B.</strong> Nama logo
-</label>
-<label class="option-label">
-  <input type="radio" name="q1" value="C" required>
-  <strong>C.</strong> Warna kemasan
-</label>
-<label class="option-label">
-  <input type="radio" name="q1" value="D" required>
-  <strong>D.</strong> Slogan
-</label>
-</section>
-<section class="question-card">
-  <h3>2. Total modal dihitung dengan cara ...</h3>
-  
-<label class="option-label">
-  <input type="radio" name="q2" value="A" required>
-  <strong>A.</strong> Menjumlahkan semua biaya
-</label>
-<label class="option-label">
-  <input type="radio" name="q2" value="B" required>
-  <strong>B.</strong> Menghapus semua harga
-</label>
-<label class="option-label">
-  <input type="radio" name="q2" value="C" required>
-  <strong>C.</strong> Menebak tanpa angka
-</label>
-<label class="option-label">
-  <input type="radio" name="q2" value="D" required>
-  <strong>D.</strong> Menggambar logo
-</label>
-</section>
-<section class="question-card">
-  <h3>3. Jika bahan Rp10.000 dan kemasan Rp5.000, total modalnya adalah ...</h3>
-  
-<label class="option-label">
-  <input type="radio" name="q3" value="A" required>
-  <strong>A.</strong> Rp5.000
-</label>
-<label class="option-label">
-  <input type="radio" name="q3" value="B" required>
-  <strong>B.</strong> Rp10.000
-</label>
-<label class="option-label">
-  <input type="radio" name="q3" value="C" required>
-  <strong>C.</strong> Rp15.000
-</label>
-<label class="option-label">
-  <input type="radio" name="q3" value="D" required>
-  <strong>D.</strong> Rp50.000
-</label>
-</section>
-<section class="question-card">
-  <h3>4. Modal per produk dihitung dengan rumus ...</h3>
-  
-<label class="option-label">
-  <input type="radio" name="q4" value="A" required>
-  <strong>A.</strong> Total modal ÷ jumlah produk
-</label>
-<label class="option-label">
-  <input type="radio" name="q4" value="B" required>
-  <strong>B.</strong> Harga jual + slogan
-</label>
-<label class="option-label">
-  <input type="radio" name="q4" value="C" required>
-  <strong>C.</strong> Logo ÷ kemasan
-</label>
-<label class="option-label">
-  <input type="radio" name="q4" value="D" required>
-  <strong>D.</strong> Nama produk - brand
-</label>
-</section>
-<section class="question-card">
-  <h3>5. Agar tidak rugi, harga jual sebaiknya ...</h3>
-  
-<label class="option-label">
-  <input type="radio" name="q5" value="A" required>
-  <strong>A.</strong> Lebih tinggi dari modal per produk
-</label>
-<label class="option-label">
-  <input type="radio" name="q5" value="B" required>
-  <strong>B.</strong> Lebih rendah dari modal per produk
-</label>
-<label class="option-label">
-  <input type="radio" name="q5" value="C" required>
-  <strong>C.</strong> Selalu Rp0
-</label>
-<label class="option-label">
-  <input type="radio" name="q5" value="D" required>
-  <strong>D.</strong> Tidak ditulis
-</label>
-</section>
-    <button class="button" type="submit" style="margin-top:18px">Submit Jawaban</button>
-    <div class="status-box" id="statusBox" role="status"></div>
-  </form>
+  </section>
+
+  <section class="results-table-wrap">
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Waktu</th>
+          <th>Day</th>
+          <th>Jenis</th>
+          <th>Nama Siswa</th>
+          <th>Email</th>
+          <th>Guru</th>
+          <th>Kelas</th>
+          <th>Nilai</th>
+        </tr>
+      </thead>
+      <tbody id="resultsBody">
+        <tr><td colspan="9">Belum ada data.</td></tr>
+      </tbody>
+    </table>
+  </section>
 </main>
 <script src="test-config.js"></script>
 <script>
-const TEST_META = {
-  testId: "day3-pre",
-  day: 3,
-  kind: "Pre Test",
-  answerKey: {"q1": "A", "q2": "A", "q3": "C", "q4": "A", "q5": "A"}
-};
 const config = window.MATHCHAMPS_TEST_CONFIG || {};
-const teacherSelect = document.getElementById("teacherName");
-(config.teachers || []).forEach((name) => {
-  const opt = document.createElement("option");
-  opt.value = name;
-  opt.textContent = name;
-  teacherSelect.appendChild(opt);
-});
-function setStatus(type, message) {
-  const box = document.getElementById("statusBox");
-  box.className = `status-box ${type}`;
-  box.textContent = message;
+let allRows = [];
+const statusBox = document.getElementById("resultsStatus");
+const spreadsheetLink = document.getElementById("spreadsheetLink");
+if (config.spreadsheetUrl) spreadsheetLink.href = config.spreadsheetUrl;
+else spreadsheetLink.style.display = "none";
+
+function setResultStatus(type, message) {
+  statusBox.className = `status-box ${type}`;
+  statusBox.textContent = message;
 }
-function collectAnswers(form) {
-  const answers = {};
-  Object.keys(TEST_META.answerKey).forEach((key) => {
-    answers[key] = form.querySelector(`input[name="${key}"]:checked`)?.value || "";
-  });
-  return answers;
-}
-function calculateScore(answers) {
-  return Object.entries(TEST_META.answerKey).reduce((score, [key, correct]) => score + (answers[key] === correct ? 20 : 0), 0);
-}
-document.getElementById("testForm").addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  const email = form.email.value.trim().toLowerCase();
-  const lockKey = `mathchamps-submitted:${TEST_META.testId}:${email}`;
-  if (localStorage.getItem(lockKey)) {
-    setStatus("warn", "Kamu sudah pernah submit test ini dari device/browser ini. Jika ada kesalahan, hubungi guru.");
-    return;
+function parseCsv(text) {
+  const rows = [];
+  let row = [], cell = "", quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i], next = text[i + 1];
+    if (ch === '"' && quoted && next === '"') { cell += '"'; i++; }
+    else if (ch === '"') quoted = !quoted;
+    else if (ch === "," && !quoted) { row.push(cell); cell = ""; }
+    else if ((ch === "\n" || ch === "\r") && !quoted) {
+      if (cell || row.length) { row.push(cell); rows.push(row); row = []; cell = ""; }
+      if (ch === "\r" && next === "\n") i++;
+    } else cell += ch;
   }
-  const answers = collectAnswers(form);
-  const payload = {
-    submittedAt: new Date().toISOString(),
-    testId: TEST_META.testId,
-    day: TEST_META.day,
-    kind: TEST_META.kind,
-    email,
-    studentName: form.studentName.value.trim(),
-    teacherName: form.teacherName.value,
-    classMode: form.classMode.value,
-    score: calculateScore(answers),
-    answers
+  if (cell || row.length) { row.push(cell); rows.push(row); }
+  const headers = rows.shift() || [];
+  return rows.map(r => Object.fromEntries(headers.map((h, i) => [h, r[i] || ""])));
+}
+function normalize(row) {
+  return {
+    date: row["Tanggal Submit"] || row["Tanggal"] || "",
+    time: row["Waktu Submit"] || row["Waktu"] || "",
+    day: String(row["Pertemuan"] || row["Day"] || "").replace("Day ", ""),
+    kind: row["Jenis Test"] || row["Jenis"] || "",
+    email: row["Email Siswa"] || row["Email"] || "",
+    student: row["Nama Lengkap Siswa"] || row["Nama Siswa"] || "",
+    teacher: row["Nama Guru"] || row["Guru"] || "",
+    classMode: row["Kelas Online/Offline"] || row["Kelas"] || "",
+    score: Number(row["Nilai"] || row["Score"] || 0)
   };
-  if (!config.scriptUrl) {
-    setStatus("warn", "Jawaban belum terkirim ke spreadsheet karena URL Apps Script belum dipasang di test-config.js. Minta admin/guru mengecek setup.");
+}
+function filteredRows() {
+  const day = document.getElementById("dayFilter").value;
+  const kind = document.getElementById("kindFilter").value;
+  const teacher = document.getElementById("teacherFilter").value.toLowerCase();
+  const student = document.getElementById("studentFilter").value.toLowerCase();
+  return allRows.filter(row =>
+    (!day || row.day === day) &&
+    (!kind || row.kind === kind) &&
+    (!teacher || row.teacher.toLowerCase().includes(teacher)) &&
+    (!student || row.student.toLowerCase().includes(student))
+  );
+}
+function render() {
+  const rows = filteredRows();
+  document.getElementById("totalSubmits").textContent = rows.length;
+  document.getElementById("preCount").textContent = rows.filter(r => r.kind === "Pre Test").length;
+  document.getElementById("postCount").textContent = rows.filter(r => r.kind === "Post Test").length;
+  const avg = rows.length ? Math.round(rows.reduce((sum, r) => sum + (Number(r.score) || 0), 0) / rows.length) : 0;
+  document.getElementById("avgScore").textContent = avg;
+  const body = document.getElementById("resultsBody");
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="9">Belum ada data yang sesuai filter.</td></tr>';
     return;
   }
+  body.innerHTML = rows.slice().reverse().map(row => `
+    <tr>
+      <td>${row.date}</td>
+      <td>${row.time}</td>
+      <td>Day ${row.day}</td>
+      <td>${row.kind}</td>
+      <td>${row.student}</td>
+      <td>${row.email}</td>
+      <td>${row.teacher}</td>
+      <td>${row.classMode}</td>
+      <td><strong>${row.score}</strong></td>
+    </tr>
+  `).join("");
+}
+function loadJsonp(url) {
+  return new Promise((resolve, reject) => {
+    const callback = "mathChampsResults_" + Date.now();
+    window[callback] = (data) => { delete window[callback]; script.remove(); resolve(data.rows || []); };
+    const script = document.createElement("script");
+    script.src = url + (url.includes("?") ? "&" : "?") + "callback=" + callback;
+    script.onerror = () => { delete window[callback]; reject(new Error("Gagal memuat Apps Script.")); };
+    document.body.appendChild(script);
+  });
+}
+async function loadResults() {
   try {
-    await fetch(config.scriptUrl, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(payload)
-    });
-    localStorage.setItem(lockKey, "1");
-    form.querySelector("button[type='submit']").disabled = true;
-    setStatus("ok", "Jawaban sudah dikirim. Terima kasih, hasilmu akan dicek guru di spreadsheet.");
+    setResultStatus("warn", "Memuat data hasil...");
+    let rows = [];
+    if (config.resultsSheetCsvUrl) {
+      const res = await fetch(config.resultsSheetCsvUrl);
+      rows = parseCsv(await res.text());
+    } else if (config.scriptUrl) {
+      rows = await loadJsonp(config.scriptUrl);
+    } else {
+      setResultStatus("warn", "Belum ada sumber data. Isi scriptUrl atau resultsSheetCsvUrl di test-config.js.");
+      allRows = [];
+      render();
+      return;
+    }
+    allRows = rows.map(normalize).filter(r => r.student || r.email);
+    setResultStatus("ok", `Data berhasil dimuat: ${allRows.length} submit.`);
+    render();
   } catch (error) {
-    setStatus("err", "Jawaban belum berhasil dikirim. Cek koneksi internet lalu coba lagi.");
+    setResultStatus("err", "Data belum berhasil dimuat. Cek setup Apps Script/CSV dan koneksi internet.");
   }
+}
+["dayFilter", "kindFilter", "teacherFilter", "studentFilter"].forEach(id => {
+  document.getElementById(id).addEventListener("input", render);
 });
+document.getElementById("refreshBtn").addEventListener("click", loadResults);
+loadResults();
 </script>
 
 </body>

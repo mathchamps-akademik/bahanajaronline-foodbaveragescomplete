@@ -13,6 +13,7 @@ Paket raw ini siap upload ke GitHub Pages. Materi dibuat untuk Holiday Program o
 - `post-test-1.pdf` sampai `post-test-5.pdf` - post test siswa.
 - `kunci-jawaban-1.pdf` sampai `kunci-jawaban-5.pdf` - kunci jawaban guru.
 - `spreadsheet-setup.html` - panduan menghubungkan test online ke Google Spreadsheet.
+- `results-dashboard.html` - dashboard ringkasan hasil pre/post test.
 - `test-config.js` - tempat mengisi URL Apps Script dan dropdown nama guru.
 - `google-apps-script-submit-results.gs` - kode Apps Script untuk menerima hasil submit.
 - `worksheet-online.html` dan `worksheet-online.pdf` - worksheet siswa.
@@ -35,5 +36,6 @@ Jika struktur repo dibuat flat/root seperti paket offline terakhir, link akan la
 4. Deploy sebagai Web App dengan akses Anyone.
 5. Copy Web App URL ke `scriptUrl` di `test-config.js`.
 6. Isi daftar guru pada bagian `teachers` di `test-config.js`.
+7. Buka `results-dashboard.html` untuk melihat ringkasan hasil.
 
 Kolom tanggal dan waktu submit otomatis masuk ke spreadsheet.

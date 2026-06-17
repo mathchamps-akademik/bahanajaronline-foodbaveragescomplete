@@ -10,5 +10,8 @@ window.MATHCHAMPS_TEST_CONFIG = {
   ],
 
   // Opsional: paste link Google Spreadsheet hasil agar mudah dibuka dari halaman setup.
-  spreadsheetUrl: ""
+  spreadsheetUrl: "",
+
+  // Opsional: jika sheet dipublish sebagai CSV, paste link CSV di sini untuk dashboard hasil.
+  resultsSheetCsvUrl: ""
 };

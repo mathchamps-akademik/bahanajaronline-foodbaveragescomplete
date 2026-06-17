@@ -10,13 +10,16 @@
   --teal: #0f7777;
   --teal-2: #2f9f9a;
   --blue: #2d64a0;
-  --sky: #9ee3ef;
-  --cream: #f7f2c7;
+  --sky: #b9eef7;
+  --cream: #fff1e6;
   --yellow: #ffc857;
   --orange: #ff9f1c;
   --ink: #17313b;
   --muted: #5e7580;
   --white: #ffffff;
+  --template-green: #22b9aa;
+  --template-sky: #9fe8f7;
+  --template-deep: #2368a9;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -26,11 +29,27 @@ body {
   font-weight: 500;
   color: var(--ink);
   background:
-    radial-gradient(circle at 8% 10%, rgba(255,255,255,.75), transparent 18rem),
-    linear-gradient(120deg, #fbf0b5 0%, #cdebd1 36%, #85d9ed 100%);
+    radial-gradient(circle at 14% 12%, rgba(255,255,255,.92) 0 34px, transparent 35px),
+    radial-gradient(circle at 60% 8%, rgba(255,255,255,.82) 0 28px, transparent 29px),
+    linear-gradient(180deg, #c8f3fb 0%, #a7e8f4 54%, #86dbe8 100%);
 }
 a { color: inherit; }
 .page-shell { min-height: 100vh; }
+.page-shell::after,
+.test-shell::after {
+  content: "";
+  position: fixed;
+  left: -4vw;
+  right: -4vw;
+  bottom: -3vh;
+  height: 16vh;
+  background:
+    radial-gradient(80% 110% at 20% 0%, rgba(30,176,163,.9) 0 58%, transparent 59%),
+    radial-gradient(80% 110% at 75% 0%, rgba(26,154,181,.9) 0 58%, transparent 59%);
+  pointer-events: none;
+  z-index: 0;
+}
+.page-shell > *, .test-shell > * { position: relative; z-index: 1; }
 .hero {
   min-height: 78vh;
   padding: 44px clamp(22px, 5vw, 78px);
@@ -40,6 +59,24 @@ a { color: inherit; }
   align-items: center;
   position: relative;
   overflow: hidden;
+}
+.hero::before, .section::before, .test-shell::before {
+  content: "";
+  position: absolute;
+  left: 5vw;
+  bottom: 8vh;
+  width: 54px;
+  height: 128px;
+  border-radius: 22px 22px 4px 4px;
+  background:
+    repeating-linear-gradient(180deg, rgba(255,255,255,.45) 0 12px, transparent 12px 24px),
+    linear-gradient(180deg, #e4c65f, #b9993d);
+  box-shadow:
+    74px 28px 0 -8px #d9bd63,
+    calc(86vw) -10px 0 -6px #d9bd63,
+    calc(90vw) 20px 0 -10px #b9993d;
+  opacity: .6;
+  pointer-events: none;
 }
 .hero::after, .section::after {
   content: "";
@@ -83,8 +120,8 @@ h1 {
   font-weight: 700;
 }
 .hero-panel {
-  background: rgba(255,255,255,.82);
-  border: 4px solid rgba(15,119,119,.22);
+  background: rgba(255,247,237,.94);
+  border: 4px solid rgba(45,100,160,.28);
   border-radius: 8px;
   padding: 22px;
   box-shadow: 0 20px 44px rgba(13,82,94,.18);
@@ -102,7 +139,7 @@ h1 {
   min-height: 44px;
   padding: 12px 16px;
   border-radius: 8px;
-  background: var(--blue);
+  background: linear-gradient(180deg, #3d7fc4, #265f9f);
   color: #fff;
   text-decoration: none;
   font-weight: 900;
@@ -153,8 +190,8 @@ h1 {
   gap: 14px;
 }
 .resource-block {
-  background: rgba(255,255,255,.86);
-  border: 2px solid rgba(15,119,119,.22);
+  background: rgba(255,247,237,.92);
+  border: 2px solid rgba(45,100,160,.22);
   border-radius: 8px;
   padding: 18px;
 }
@@ -215,11 +252,44 @@ h1 {
   display: none;
   padding: 34px 54px 74px;
   background:
-    radial-gradient(circle at 92% 12%, rgba(255,255,255,.55), transparent 16rem),
-    linear-gradient(120deg, #f7f2c7 0%, #c9edd9 36%, #99e1f2 100%);
+    radial-gradient(circle at 54% 8%, rgba(255,255,255,.95) 0 28px, transparent 29px),
+    radial-gradient(circle at 58% 9%, rgba(255,255,255,.85) 0 22px, transparent 23px),
+    radial-gradient(circle at 50% 10%, rgba(255,255,255,.9) 0 20px, transparent 21px),
+    linear-gradient(180deg, #c8f3fb 0%, #a9ebf5 58%, #83dbe9 100%);
   position: relative;
   overflow: hidden;
 }
+.slide::before {
+  content: "";
+  position: absolute;
+  left: -5vw;
+  right: -5vw;
+  bottom: -4vh;
+  height: 17vh;
+  background:
+    radial-gradient(80% 120% at 18% 0%, rgba(35,185,170,.92) 0 56%, transparent 57%),
+    radial-gradient(80% 120% at 72% 0%, rgba(33,155,188,.9) 0 56%, transparent 57%);
+  z-index: 0;
+}
+.slide::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  bottom: 10vh;
+  width: 58px;
+  height: 128px;
+  border-radius: 22px 22px 4px 4px;
+  background:
+    repeating-linear-gradient(180deg, rgba(255,255,255,.48) 0 11px, transparent 11px 24px),
+    linear-gradient(180deg, #e4c65f, #a98e3b);
+  box-shadow:
+    74px 28px 0 -8px #d9bd63,
+    calc(100vw - 170px) -6px 0 -6px #d9bd63,
+    calc(100vw - 104px) 30px 0 -12px #a98e3b;
+  opacity: .68;
+  z-index: 0;
+}
+.slide > * { position: relative; z-index: 1; }
 .slide.active { display: grid; }
 .slide.layout-title {
   grid-template-columns: minmax(0, 1.1fr) minmax(300px, .72fr);
@@ -252,8 +322,8 @@ h1 {
   font-size: 18px;
 }
 .slide-panel, .note-box, .image-card {
-  background: rgba(255,255,255,.9);
-  border: 4px solid rgba(15,119,119,.28);
+  background: rgba(255,247,237,.94);
+  border: 4px solid rgba(45,100,160,.25);
   border-radius: 8px;
   box-shadow: 0 14px 32px rgba(23,49,59,.13);
 }
@@ -300,7 +370,7 @@ h1 {
   position: absolute;
   top: 26px;
   right: 34px;
-  background: #ffcf5c;
+  background: linear-gradient(180deg, #ffe47a, #ffbf44);
   color: #674100;
   padding: 9px 14px;
   border-radius: 999px;
@@ -318,8 +388,8 @@ h1 {
   grid-template-columns: auto 1fr;
   gap: 12px;
   align-items: start;
-  background: rgba(255,255,255,.9);
-  border: 3px solid rgba(15,119,119,.2);
+  background: rgba(255,247,237,.94);
+  border: 3px solid rgba(45,100,160,.18);
   border-radius: 8px;
   padding: 12px 16px;
   font-size: clamp(21px, 1.75vw, 28px);
@@ -360,6 +430,44 @@ h1 {
   align-items: center;
   padding: 42px;
 }
+.embed-mode .wheel-page {
+  height: 100vh;
+  min-height: 0;
+  grid-template-columns: .9fr 1fr;
+  gap: 14px;
+  padding: 16px;
+  overflow: hidden;
+}
+.embed-mode .wheel-page h1 {
+  font-size: clamp(28px, 3.9vw, 46px);
+  line-height: .96;
+}
+.embed-mode .wheel-page .hero-copy {
+  font-size: clamp(13px, 1.3vw, 16px);
+  line-height: 1.16;
+  margin-top: 6px;
+}
+.embed-mode .wheel-page .result-box:last-of-type {
+  display: none;
+}
+.embed-mode .wheel-wrap {
+  width: min(42vw, 340px, calc(100vh - 36px));
+}
+.embed-mode .result-box {
+  padding: 10px;
+}
+.embed-mode .result-text {
+  font-size: 26px;
+  margin: 6px 0 8px;
+}
+.embed-mode .eyebrow {
+  font-size: 12px;
+  padding: 8px 12px;
+}
+.embed-mode .button {
+  font-size: 13px;
+  padding: 10px 14px;
+}
 .wheel-wrap { position: relative; width: min(80vw, 520px); aspect-ratio: 1; margin: auto; }
 #wheelCanvas { width: 100%; height: 100%; filter: drop-shadow(0 18px 34px rgba(19,84,94,.25)); }
 .pointer {
@@ -386,8 +494,8 @@ h1 {
   gap: 16px;
 }
 .prep-card {
-  background: rgba(255,255,255,.92);
-  border: 3px solid rgba(15,119,119,.24);
+  background: rgba(255,247,237,.94);
+  border: 3px solid rgba(45,100,160,.23);
   border-radius: 8px;
   padding: 16px 18px;
   min-height: 130px;
@@ -424,8 +532,8 @@ h1 {
   font-weight: 800;
 }
 .mission-board {
-  background: rgba(255,255,255,.9);
-  border: 4px solid rgba(15,119,119,.28);
+  background: rgba(255,247,237,.94);
+  border: 4px solid rgba(45,100,160,.25);
   border-radius: 8px;
   padding: 22px;
   box-shadow: 0 14px 32px rgba(23,49,59,.13);
@@ -487,13 +595,16 @@ h1 {
 .test-shell {
   min-height: 100vh;
   padding: 36px clamp(16px, 4vw, 64px);
-  background: linear-gradient(120deg, #fbf0b5 0%, #cdebd1 42%, #93ddee 100%);
+  position: relative;
+  background:
+    radial-gradient(circle at 18% 10%, rgba(255,255,255,.9) 0 30px, transparent 31px),
+    linear-gradient(180deg, #c8f3fb 0%, #a9ebf5 58%, #83dbe9 100%);
 }
 .test-card {
   max-width: 980px;
   margin: 0 auto 16px;
-  background: rgba(255,255,255,.92);
-  border: 3px solid rgba(15,119,119,.26);
+  background: rgba(255,247,237,.94);
+  border: 3px solid rgba(45,100,160,.26);
   border-radius: 8px;
   padding: 22px;
   box-shadow: 0 14px 30px rgba(23,49,59,.12);
@@ -516,7 +627,7 @@ h1 {
   border: 2px solid rgba(15,119,119,.32);
   border-radius: 8px;
   padding: 10px 12px;
-  font: 800 19px "Baloo 2", "Comic Sans MS", Arial, sans-serif;
+  font: 600 19px "Baloo 2", "Comic Sans MS", Arial, sans-serif;
   color: var(--ink);
   background: #fff;
 }
@@ -535,7 +646,7 @@ h1 {
   border-radius: 8px;
   background: #fff;
   font-size: 19px;
-  font-weight: 800;
+  font-weight: 500;
 }
 .option-label input { margin-right: 8px; }
 .status-box {
@@ -548,8 +659,81 @@ h1 {
 .status-box.ok { display: block; background: #dff8da; color: #246326; }
 .status-box.warn { display: block; background: #fff2ba; color: #7a5100; }
 .status-box.err { display: block; background: #ffe0dc; color: #8d2b1c; }
+.results-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 14px;
+  max-width: 1120px;
+  margin: 0 auto 16px;
+}
+.metric-card {
+  background: rgba(255,247,237,.94);
+  border: 3px solid rgba(45,100,160,.24);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 12px 26px rgba(23,49,59,.12);
+}
+.metric-card strong {
+  display: block;
+  color: var(--teal);
+  font-size: 34px;
+  line-height: 1;
+}
+.metric-card span {
+  color: var(--muted);
+  font-weight: 700;
+}
+.filter-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  gap: 12px;
+}
+.results-table-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+.results-table {
+  width: 100%;
+  min-width: 940px;
+  border-collapse: collapse;
+  background: rgba(255,247,237,.96);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 12px 26px rgba(23,49,59,.12);
+}
+.results-table th, .results-table td {
+  border: 2px solid rgba(45,100,160,.15);
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 15px;
+}
+.results-table th {
+  background: #2d64a0;
+  color: #fff;
+}
+.spin-slide-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 430px;
+  gap: 18px;
+  min-height: 0;
+}
+.spin-embed {
+  background: rgba(255,247,237,.94);
+  border: 4px solid rgba(45,100,160,.25);
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 0;
+  box-shadow: 0 14px 32px rgba(23,49,59,.13);
+}
+.spin-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+}
 @media (max-width: 980px) {
-  .hero, .cards, .two-col, .three-col, .worksheet-page, .wheel-page, .prep-grid, .form-grid { grid-template-columns: 1fr; }
+  .hero, .cards, .two-col, .three-col, .worksheet-page, .wheel-page, .prep-grid, .form-grid, .results-summary, .filter-row, .spin-slide-grid { grid-template-columns: 1fr; }
   .slide { overflow: auto; height: auto; min-height: 100vh; }
 }
 @media print {
@@ -600,7 +784,7 @@ h1 {
   
 <label class="option-label">
   <input type="radio" name="q1" value="A" required>
-  <strong>A.</strong> Wadah/tampilan luar produk
+  <strong>A.</strong> Wadah atau tampilan luar produk
 </label>
 <label class="option-label">
   <input type="radio" name="q1" value="B" required>
@@ -636,63 +820,63 @@ h1 {
 </label>
 </section>
 <section class="question-card">
-  <h3>3. Sales script membantu siswa untuk ...</h3>
+  <h3>3. Kalimat promosi yang baik sebaiknya ...</h3>
   
 <label class="option-label">
   <input type="radio" name="q3" value="A" required>
-  <strong>A.</strong> Berlatih menawarkan produk
+  <strong>A.</strong> Jelas, singkat, dan sopan
 </label>
 <label class="option-label">
   <input type="radio" name="q3" value="B" required>
-  <strong>B.</strong> Melupakan harga
+  <strong>B.</strong> Membingungkan
 </label>
 <label class="option-label">
   <input type="radio" name="q3" value="C" required>
-  <strong>C.</strong> Menghapus kemasan
+  <strong>C.</strong> Terlalu panjang
 </label>
 <label class="option-label">
   <input type="radio" name="q3" value="D" required>
-  <strong>D.</strong> Tidak bicara
+  <strong>D.</strong> Menyembunyikan produk
 </label>
 </section>
 <section class="question-card">
-  <h3>4. Production Planner diisi saat ...</h3>
+  <h3>4. Sebelum membuat produk di rumah, siswa perlu ...</h3>
   
 <label class="option-label">
   <input type="radio" name="q4" value="A" required>
-  <strong>A.</strong> Menyiapkan dan membuat produk di rumah
+  <strong>A.</strong> Izin dan bantuan orang tua/wali
 </label>
 <label class="option-label">
   <input type="radio" name="q4" value="B" required>
-  <strong>B.</strong> Tidur siang
+  <strong>B.</strong> Bermain api sendiri
 </label>
 <label class="option-label">
   <input type="radio" name="q4" value="C" required>
-  <strong>C.</strong> Mengganti wallpaper
+  <strong>C.</strong> Tidak cuci tangan
 </label>
 <label class="option-label">
   <input type="radio" name="q4" value="D" required>
-  <strong>D.</strong> Tidak melakukan apa pun
+  <strong>D.</strong> Membeli bahan tanpa bertanya
 </label>
 </section>
 <section class="question-card">
-  <h3>5. Saat membuat produk di rumah, siswa harus ...</h3>
+  <h3>5. Saat menawarkan produk, sikap yang baik adalah ...</h3>
   
 <label class="option-label">
   <input type="radio" name="q5" value="A" required>
-  <strong>A.</strong> Dengan pengawasan orang tua/wali
+  <strong>A.</strong> Ramah dan percaya diri
 </label>
 <label class="option-label">
   <input type="radio" name="q5" value="B" required>
-  <strong>B.</strong> Sendirian tanpa izin
+  <strong>B.</strong> Marah kepada pembeli
 </label>
 <label class="option-label">
   <input type="radio" name="q5" value="C" required>
-  <strong>C.</strong> Bermain api
+  <strong>C.</strong> Berbisik terlalu pelan
 </label>
 <label class="option-label">
   <input type="radio" name="q5" value="D" required>
-  <strong>D.</strong> Tidak cuci tangan
+  <strong>D.</strong> Tidak menyebut produk
 </label>
 </section>
     <button class="button" type="submit" style="margin-top:18px">Submit Jawaban</button>

@@ -11,6 +11,7 @@
     "rubric": "rubrik-final-presentasi.html",
     "questionBank": "question-bank.html",
     "spreadsheetSetup": "spreadsheet-setup.html",
+    "resultsDashboard": "results-dashboard.html",
     "testConfig": "test-config.js",
     "appsScript": "google-apps-script-submit-results.gs",
     "day1DeckHtml": "pertemuan-1-teacher-deck.html",

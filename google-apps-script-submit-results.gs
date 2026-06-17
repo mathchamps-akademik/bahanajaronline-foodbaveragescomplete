@@ -80,8 +80,22 @@ function doPost(e) {
   }
 }
 
-function doGet() {
+function doGet(e) {
+  const sheet = getSheet_();
+  const values = sheet.getDataRange().getValues();
+  const headers = values[0] || [];
+  const rows = values.slice(1).map(row => {
+    const item = {};
+    headers.forEach((header, index) => item[header] = row[index]);
+    return item;
+  });
+  const payload = JSON.stringify({ ok: true, rows });
+  if (e && e.parameter && e.parameter.callback) {
+    return ContentService
+      .createTextOutput(e.parameter.callback + "(" + payload + ");")
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
   return ContentService
-    .createTextOutput("Math Champs test endpoint aktif.")
-    .setMimeType(ContentService.MimeType.TEXT);
+    .createTextOutput(payload)
+    .setMimeType(ContentService.MimeType.JSON);
 }
