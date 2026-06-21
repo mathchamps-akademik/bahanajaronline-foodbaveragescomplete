@@ -1,0 +1,4 @@
+Versi compressed untuk GitHub web upload.
+
+Gunakan file worksheet-online.pdf di folder ini hanya jika file exact 47 MB gagal di-upload lewat GitHub web.
+Upload ke root repo dan replace file lama dengan nama yang sama.
