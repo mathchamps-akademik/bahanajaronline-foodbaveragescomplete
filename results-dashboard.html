@@ -996,7 +996,7 @@ h1 {
     </table>
   </section>
 </main>
-<script src="test-config.js"></script>
+<script src="test-config.js?v=submitfix-20260707"></script>
 <script>
 const config = window.MATHCHAMPS_TEST_CONFIG || {};
 let allRows = [];
@@ -1155,6 +1155,52 @@ async function loadStorageRows() {
   const chunks = await Promise.all(tasks);
   return chunks.flat();
 }
+function loadJsonp(url) {
+  return new Promise((resolve, reject) => {
+    const callbackName = `mathchampsResults_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    const script = document.createElement("script");
+    const separator = url.includes("?") ? "&" : "?";
+    const timeout = setTimeout(() => {
+      cleanup();
+      reject(new Error("Timeout saat membaca Apps Script."));
+    }, 15000);
+    function cleanup() {
+      clearTimeout(timeout);
+      delete window[callbackName];
+      script.remove();
+    }
+    window[callbackName] = (payload) => {
+      cleanup();
+      resolve(payload);
+    };
+    script.onerror = () => {
+      cleanup();
+      reject(new Error("Apps Script tidak bisa dibaca."));
+    };
+    script.src = `${url}${separator}action=list&callback=${encodeURIComponent(callbackName)}&v=${Date.now()}`;
+    document.body.appendChild(script);
+  });
+}
+async function loadAppsScriptRows() {
+  if (!config.scriptUrl) return [];
+  const payload = await loadJsonp(String(config.scriptUrl).trim());
+  if (Array.isArray(payload)) return payload;
+  return payload.rows || [];
+}
+function dedupeRows(rows) {
+  const seen = new Set();
+  return rows.filter((row) => {
+    const key = [
+      row.student_key || row.studentKey || row["Student Key"] || "",
+      row.test_id || row.testId || row["Test ID"] || "",
+      String(row.email || row["Email Siswa"] || row["Email"] || "").trim().toLowerCase(),
+      row.submitted_at || row.submittedAt || row["Timestamp Client"] || row["Tanggal Submit"] || ""
+    ].join("|");
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
 function toCsvValue(value) {
   return `"${String(value ?? "").replace(/"/g, '""')}"`;
 }
@@ -1187,13 +1233,38 @@ function exportCsv() {
 async function loadResults() {
   try {
     setResultStatus("warn", "Memuat data hasil...");
-    let rows = [];
+    const chunks = [];
+    const errors = [];
+    if (config.scriptUrl) {
+      try {
+        chunks.push(await loadAppsScriptRows());
+      } catch (error) {
+        console.warn(error);
+        errors.push("Apps Script");
+      }
+    }
     if (config.supabaseUrl && config.storageKey && config.resultPrefix) {
-      rows = await loadStorageRows();
-    } else if (config.resultsSheetCsvUrl) {
-      const res = await fetch(config.resultsSheetCsvUrl);
-      rows = parseCsv(await res.text());
-    } else {
+      try {
+        chunks.push(await loadStorageRows());
+      } catch (error) {
+        console.warn(error);
+        errors.push("Supabase");
+      }
+    }
+    if (config.resultsSheetCsvUrl) {
+      try {
+        const res = await fetch(config.resultsSheetCsvUrl);
+        chunks.push(parseCsv(await res.text()));
+      } catch (error) {
+        console.warn(error);
+        errors.push("CSV Google Sheet");
+      }
+    }
+    let rows = dedupeRows(chunks.flat());
+    if (!rows.length && errors.length) {
+      throw new Error(`Sumber data belum bisa dibaca: ${errors.join(", ")}`);
+    }
+    if (!rows.length && !config.scriptUrl && !config.supabaseUrl && !config.resultsSheetCsvUrl) {
       setResultStatus("warn", "Belum ada sumber data. Cek konfigurasi hasil di test-config.js.");
       allRows = [];
       render();

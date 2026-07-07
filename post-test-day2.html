@@ -1084,7 +1084,7 @@ h1 {
     </section>
   </form>
 </main>
-<script src="test-config.js?v=dropdown-20260621-v2"></script>
+<script src="test-config.js?v=submitfix-20260707"></script>
 <script>
 const TEST_META = {
   testId: "day2-post",
@@ -1141,6 +1141,9 @@ function resultPrefix() {
 function requireStorageConfig() {
   return Boolean(config.supabaseUrl && config.storageKey && config.resultPrefix);
 }
+function requireAppsScriptConfig() {
+  return Boolean(config.scriptUrl && /^https?:\/\//.test(String(config.scriptUrl).trim()));
+}
 async function listExistingResults() {
   if (!requireStorageConfig()) return [];
   const response = await fetch(`${config.supabaseUrl}/storage/v1/object/list/html-pages`, {
@@ -1170,14 +1173,23 @@ async function listExistingResults() {
 async function hasAlreadySubmitted(email) {
   const key = studentKey(email);
   if (localStorage.getItem(`mathchamps-online-submitted:${key}`)) return true;
-  const existing = await listExistingResults();
-  return existing.some((row) => {
-    const rowEmail = String(row.email || row["Email Siswa"] || "").trim().toLowerCase();
-    const rowTestId = String(row.testId || row.test_id || "");
-    return (row.student_key && row.student_key === key) || (rowEmail === String(email).trim().toLowerCase() && rowTestId === TEST_META.testId);
-  });
+  if (!requireStorageConfig()) return false;
+  try {
+    const existing = await listExistingResults();
+    return existing.some((row) => {
+      const rowEmail = String(row.email || row["Email Siswa"] || "").trim().toLowerCase();
+      const rowTestId = String(row.testId || row.test_id || "");
+      return (row.student_key && row.student_key === key) || (rowEmail === String(email).trim().toLowerCase() && rowTestId === TEST_META.testId);
+    });
+  } catch (error) {
+    if (requireAppsScriptConfig()) {
+      console.warn("Pengecekan duplikat Supabase dilewati karena storage sedang tidak bisa dibaca.", error);
+      return false;
+    }
+    throw error;
+  }
 }
-async function saveResponse(payload) {
+async function saveResponseToSupabase(payload) {
   if (!requireStorageConfig()) throw new Error("Konfigurasi storage hasil belum lengkap di test-config.js.");
   const random = Math.random().toString(36).slice(2, 10);
   const fileName = `${Date.now()}-${random}.json`;
@@ -1194,6 +1206,35 @@ async function saveResponse(payload) {
   });
   if (!response.ok) throw new Error(await response.text());
   return fileName;
+}
+async function saveResponseToAppsScript(payload) {
+  if (!requireAppsScriptConfig()) throw new Error("URL Apps Script belum diisi di test-config.js.");
+  await fetch(String(config.scriptUrl).trim(), {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  });
+  return "apps-script";
+}
+async function saveResponse(payload) {
+  const errors = [];
+  if (requireAppsScriptConfig()) {
+    try {
+      return await saveResponseToAppsScript(payload);
+    } catch (error) {
+      errors.push(`Apps Script: ${error.message || error}`);
+    }
+  }
+  if (requireStorageConfig()) {
+    try {
+      return await saveResponseToSupabase(payload);
+    } catch (error) {
+      errors.push(`Supabase: ${error.message || error}`);
+    }
+  }
+  if (!errors.length) errors.push("Konfigurasi penyimpanan hasil belum lengkap di test-config.js.");
+  throw new Error(errors.join(" | "));
 }
 document.getElementById("startButton").addEventListener("click", async () => {
   const form = document.getElementById("testForm");
@@ -1220,7 +1261,7 @@ document.getElementById("startButton").addEventListener("click", async () => {
     window.scrollTo(0, 0);
   } catch (error) {
     console.error(error);
-    setStatus("err", "Belum bisa mengecek data. Cek koneksi internet lalu coba lagi.");
+    setStatus("err", "Belum bisa mengecek data. Hubungi guru/admin untuk mengecek penyimpanan hasil, lalu coba lagi.");
     startButton.disabled = false;
   }
 });
@@ -1283,7 +1324,7 @@ document.getElementById("testForm").addEventListener("submit", async (event) => 
     setStatus("ok", `Jawaban tersimpan. Skor kamu: ${score}. Guru bisa melihat hasilnya di spreadsheet hasil.`, "quizStatusBox");
   } catch (error) {
     console.error(error);
-    setStatus("err", "Jawaban belum berhasil tersimpan. Cek koneksi internet lalu coba submit lagi.", "quizStatusBox");
+    setStatus("err", "Jawaban belum berhasil tersimpan. Hubungi guru/admin untuk mengecek penyimpanan hasil, lalu coba submit lagi.", "quizStatusBox");
     submitButton.disabled = false;
   }
 });

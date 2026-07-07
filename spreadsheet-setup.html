@@ -921,7 +921,7 @@ h1 {
       <p class="eyebrow">Pre/Post Test Online</p>
       <h2>Panduan Spreadsheet Hasil</h2>
     </div>
-    <p class="section-note">Guru tidak perlu setup teknis tambahan. Jawaban siswa otomatis masuk ke dashboard hasil online, lalu bisa difilter dan diekspor menjadi CSV untuk dibuka di Google Sheets atau Excel.</p>
+	    <p class="section-note">Jawaban siswa masuk ke dashboard hasil online. Jika storage Supabase sedang menolak submit, admin bisa memakai Google Apps Script sebagai jalur simpan ke Google Sheet.</p>
   </div>
   
 <details class="teacher-menu">
@@ -948,8 +948,8 @@ h1 {
     </section>
     <section class="resource-block">
       <h3>5. Edit Cabang & Teacher</h3>
-      <p>Admin hanya perlu mengubah daftar cabang dan nama teacher di <code>test-config.js</code>. Konfigurasi penyimpanan hasil tidak perlu diubah.</p>
-    </section>
+	      <p>Admin bisa mengubah daftar cabang, nama teacher, dan <code>scriptUrl</code> di <code>test-config.js</code>. <code>scriptUrl</code> diisi dengan Web App URL dari Google Apps Script jika submit Supabase sedang bermasalah.</p>
+	    </section>
   </div>
   <div class="button-row" style="margin-top:22px">
     <a class="button" href="results-dashboard.html">Buka Dashboard Hasil</a>

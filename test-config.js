@@ -174,7 +174,11 @@ window.MATHCHAMPS_TEST_CONFIG = {
     "Sri Wulandari Mubarochah"
   ],
 
-  // Hasil test otomatis tersimpan ke dashboard online. Bagian ini tidak perlu diubah.
+  // Endpoint Google Apps Script untuk submit hasil test ke Google Sheet.
+  // Isi setelah Apps Script di-deploy sebagai Web App. Jika kosong, halaman tetap mencoba Supabase lama.
+  scriptUrl: "",
+
+  // Hasil test lama tetap bisa dibaca dari dashboard online. Jangan dihapus agar data lama tetap tampil.
   supabaseUrl: "https://suifgsvtcbrawzdhyuhk.supabase.co",
   storageKey: "sb_publishable_9BdHYLcpIS0B6Z92WxXf_Q_WpWBswLB",
   resultPrefix: "api/math-champs-fnb-online-complete-results-20260617",
@@ -182,6 +186,6 @@ window.MATHCHAMPS_TEST_CONFIG = {
   // Opsional: paste link Google Spreadsheet pribadi jika admin ingin menaruh arsip manual.
   spreadsheetUrl: "",
 
-  // Opsional lama: hanya dipakai jika suatu saat ingin membaca CSV Google Sheet eksternal.
+  // Opsional: link CSV Google Sheet jika dashboard ingin membaca sheet yang dipublish ke web.
   resultsSheetCsvUrl: ""
 };

@@ -19,11 +19,13 @@ function getSheet_() {
       "Email Siswa",
       "Nama Lengkap Siswa",
       "Cabang",
-      "Nama Teacher",
-      "Nilai",
-      "Jawaban Q1",
-      "Jawaban Q2",
-      "Jawaban Q3",
+	      "Nama Teacher",
+	      "Nilai",
+	      "Benar",
+	      "answer_labels",
+	      "Jawaban Q1",
+	      "Jawaban Q2",
+	      "Jawaban Q3",
       "Jawaban Q4",
       "Jawaban Q5",
       "Raw JSON"
@@ -40,17 +42,24 @@ function doPost(e) {
     const now = new Date();
     const tz = Session.getScriptTimeZone();
     const dateText = Utilities.formatDate(now, tz, "yyyy-MM-dd");
-    const timeText = Utilities.formatDate(now, tz, "HH:mm:ss");
-    const answers = data.answers || {};
-    const sheet = getSheet_();
-    const values = sheet.getDataRange().getValues();
-    const email = String(data.email || "").trim().toLowerCase();
-    const testId = String(data.testId || "").trim();
-    for (let i = 1; i < values.length; i++) {
-      if (String(values[i][3]).trim() === testId && String(values[i][6]).trim().toLowerCase() === email) {
-        return ContentService
-          .createTextOutput(JSON.stringify({ ok: false, duplicate: true }))
-          .setMimeType(ContentService.MimeType.JSON);
+	    const timeText = Utilities.formatDate(now, tz, "HH:mm:ss");
+	    const answers = data.answers || {};
+	    const answerLabels = data.answer_labels || data.answerLabels || [
+	      answers.q1 || "",
+	      answers.q2 || "",
+	      answers.q3 || "",
+	      answers.q4 || "",
+	      answers.q5 || ""
+	    ].filter(String);
+	    const sheet = getSheet_();
+	    const values = sheet.getDataRange().getValues();
+	    const email = String(data.email || "").trim().toLowerCase();
+	    const testId = String(data.testId || "").trim();
+	    for (let i = 1; i < values.length; i++) {
+	      if (String(values[i][3]).trim() === testId && String(values[i][6]).trim().toLowerCase() === email) {
+	        return ContentService
+	          .createTextOutput(JSON.stringify({ ok: false, duplicate: true }))
+	          .setMimeType(ContentService.MimeType.JSON);
       }
     }
     sheet.appendRow([
@@ -62,12 +71,14 @@ function doPost(e) {
       data.kind || "",
       data.email || "",
       data.studentName || "",
-      data.branchName || data.branch || data.className || "",
-      data.teacherName || data.teacher || "",
-      data.score || 0,
-      answers.q1 || "",
-      answers.q2 || "",
-      answers.q3 || "",
+	      data.branchName || data.branch || data.className || "",
+	      data.teacherName || data.teacher || "",
+	      data.score || 0,
+	      data.correct || "",
+	      Array.isArray(answerLabels) ? answerLabels.join(", ") : String(answerLabels || ""),
+	      answers.q1 || "",
+	      answers.q2 || "",
+	      answers.q3 || "",
       answers.q4 || "",
       answers.q5 || "",
       JSON.stringify(data)
