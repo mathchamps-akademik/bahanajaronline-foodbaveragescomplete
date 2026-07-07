@@ -996,7 +996,7 @@ h1 {
     </table>
   </section>
 </main>
-<script src="test-config.js?v=submitfix-20260707"></script>
+<script src="test-config.js?v=submitfix-v2-20260707"></script>
 <script>
 const config = window.MATHCHAMPS_TEST_CONFIG || {};
 let allRows = [];
@@ -1117,9 +1117,18 @@ function render() {
     </tr>
   `).join("");
 }
+async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
 async function listStoredResults(day, kindId) {
   const prefix = `${config.resultPrefix}/day${day}/${kindId}`;
-  const response = await fetch(`${config.supabaseUrl}/storage/v1/object/list/html-pages`, {
+  const response = await fetchWithTimeout(`${config.supabaseUrl}/storage/v1/object/list/html-pages`, {
     method: "POST",
     headers: {
       apikey: config.storageKey,
@@ -1132,13 +1141,13 @@ async function listStoredResults(day, kindId) {
       offset: 0,
       sortBy: { column: "created_at", order: "desc" }
     })
-  });
+  }, 6000);
   if (!response.ok) throw new Error(await response.text());
   const files = await response.json();
   const rows = [];
   for (const file of files.filter((item) => item.name && item.name.endsWith(".json"))) {
     const url = `${config.supabaseUrl}/storage/v1/object/public/html-pages/${prefix}/${file.name}?v=${Date.now()}`;
-    const itemResponse = await fetch(url);
+    const itemResponse = await fetchWithTimeout(url, {}, 6000);
     if (itemResponse.ok) rows.push(await itemResponse.json());
   }
   return rows;
@@ -1186,6 +1195,14 @@ async function loadAppsScriptRows() {
   const payload = await loadJsonp(String(config.scriptUrl).trim());
   if (Array.isArray(payload)) return payload;
   return payload.rows || [];
+}
+function loadLocalRows() {
+  try {
+    return JSON.parse(localStorage.getItem("mathchamps-online-local-results") || "[]");
+  } catch (error) {
+    console.warn("Backup lokal tidak bisa dibaca.", error);
+    return [];
+  }
 }
 function dedupeRows(rows) {
   const seen = new Set();
@@ -1260,6 +1277,7 @@ async function loadResults() {
         errors.push("CSV Google Sheet");
       }
     }
+    chunks.push(loadLocalRows());
     let rows = dedupeRows(chunks.flat());
     if (!rows.length && errors.length) {
       throw new Error(`Sumber data belum bisa dibaca: ${errors.join(", ")}`);
