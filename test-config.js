@@ -178,6 +178,9 @@ window.MATHCHAMPS_TEST_CONFIG = {
   // Isi setelah Apps Script di-deploy sebagai Web App. Jika kosong, halaman tetap mencoba Supabase lama.
   scriptUrl: "",
 
+  // ID batch untuk membuka submit baru tanpa terkunci data submit lama di browser.
+  resultBatchId: "batch-20260708-new-students",
+
   // Hasil test lama tetap bisa dibaca dari dashboard online. Jangan dihapus agar data lama tetap tampil.
   supabaseUrl: "https://suifgsvtcbrawzdhyuhk.supabase.co",
   storageKey: "sb_publishable_9BdHYLcpIS0B6Z92WxXf_Q_WpWBswLB",

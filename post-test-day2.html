@@ -1084,7 +1084,7 @@ h1 {
     </section>
   </form>
 </main>
-<script src="test-config.js?v=submitfix-v2-20260707"></script>
+<script src="test-config.js?v=prepost-recovery-20260708"></script>
 <script>
 const TEST_META = {
   testId: "day2-post",
@@ -1132,8 +1132,11 @@ function countCorrect(answers) {
 function csvSafe(value) {
   return String(value ?? "").replace(/[\n\r]+/g, " ").trim();
 }
+function resultBatchId() {
+  return String(config.resultBatchId || "default-batch").trim() || "default-batch";
+}
 function studentKey(email) {
-  return `${TEST_META.testId}|${String(email || "").trim().toLowerCase()}`;
+  return `${resultBatchId()}|${TEST_META.testId}|${String(email || "").trim().toLowerCase()}`;
 }
 function resultPrefix() {
   return `${config.resultPrefix}/day${TEST_META.day}/${TEST_META.kindId}`;
@@ -1179,10 +1182,16 @@ function localBackupKey() {
 }
 function saveResponseToLocalBackup(payload) {
   const key = localBackupKey();
-  const rows = JSON.parse(localStorage.getItem(key) || "[]");
-  rows.push(payload);
-  localStorage.setItem(key, JSON.stringify(rows));
-  return "local-backup";
+  try {
+    const rows = JSON.parse(localStorage.getItem(key) || "[]");
+    rows.push(payload);
+    localStorage.setItem(key, JSON.stringify(rows));
+    return "local-backup";
+  } catch (error) {
+    console.warn("Backup lokal penuh/tidak tersedia. Menyimpan salinan sementara di halaman.", error);
+    window.MATHCHAMPS_LAST_BACKUP = payload;
+    return "temporary-backup";
+  }
 }
 async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
   const controller = new AbortController();
@@ -1241,7 +1250,7 @@ async function saveResponse(payload) {
   return saveResponseToLocalBackup(payload);
 }
 function savedMessage(score, target) {
-  if (target === "local-backup") {
+  if (target === "local-backup" || target === "temporary-backup") {
     return `Jawaban tersimpan. Skor kamu: ${score}. Terima kasih sudah mengerjakan.`;
   }
   return `Jawaban tersimpan. Skor kamu: ${score}. Guru bisa melihat hasilnya di spreadsheet hasil.`;
@@ -1313,6 +1322,7 @@ document.getElementById("testForm").addEventListener("submit", async (event) => 
       kind_label: TEST_META.kind,
       testId: TEST_META.testId,
       test_id: TEST_META.testId,
+      batchId: resultBatchId(),
       email,
       name: csvSafe(form.studentName.value),
       studentName: csvSafe(form.studentName.value),
@@ -1327,10 +1337,12 @@ document.getElementById("testForm").addEventListener("submit", async (event) => 
       student_key: studentKey(email),
       answers,
       answer_labels: answerLabels,
-      questions: TEST_META.questions.map((question) => question.question)
+      questions: TEST_META.questions.map((question) => question.question),
+      saveTarget: "pending"
     };
     const saveTarget = await saveResponse(payload);
-    localStorage.setItem(`mathchamps-online-submitted:${studentKey(email)}`, "1");
+    payload.saveTarget = saveTarget;
+    try { localStorage.setItem(`mathchamps-online-submitted:${studentKey(email)}`, "1"); } catch (error) { console.warn("Kunci submit lokal tidak bisa disimpan.", error); }
     setStatus("ok", savedMessage(score, saveTarget), "quizStatusBox");
   } catch (error) {
     console.error(error);

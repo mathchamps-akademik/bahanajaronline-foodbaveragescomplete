@@ -923,12 +923,15 @@ h1 {
     
 <details class="teacher-menu">
   <summary>CATATAN GURU</summary>
-  <ul><li>Dashboard ini untuk guru/admin, bukan untuk siswa.</li><li>Klik Refresh Data setelah siswa selesai submit.</li><li>Jika nama siswa belum muncul, minta siswa cek koneksi dan pastikan submit berhasil.</li></ul>
+  <ul><li>Dashboard ini untuk guru/admin, bukan untuk siswa.</li><li>Klik Refresh Data setelah siswa selesai submit.</li><li>Data lama Supabase sudah ikut dibaca, termasuk prefix lama Day 1.</li><li>Jika ada siswa yang submit saat storage pusat bermasalah, gunakan menu Recovery Backup dari browser siswa lalu import file JSON/CSV di dashboard ini.</li></ul>
 </details>
 
     <div class="button-row">
       <button class="button light" type="button" id="refreshBtn">Refresh Data</button>
       <button class="button secondary" type="button" id="exportBtn">Export CSV</button>
+      <button class="button light" type="button" id="importBtn">Import Backup JSON/CSV</button>
+      <input id="importFile" type="file" accept=".json,.csv,application/json,text/csv" hidden>
+      <a class="button" href="backup-recovery.html">Recovery Backup</a>
       <a class="button" href="spreadsheet-setup.html">Panduan Hasil</a>
       <a class="button secondary" id="spreadsheetLink" href="#" target="_blank" rel="noopener">Buka Spreadsheet Arsip</a>
     </div>
@@ -996,7 +999,8 @@ h1 {
     </table>
   </section>
 </main>
-<script src="test-config.js?v=submitfix-v2-20260707"></script>
+<script src="test-config.js?v=prepost-recovery-20260708"></script>
+<script src="seed-results.js?v=prepost-recovery-20260708"></script>
 <script>
 const config = window.MATHCHAMPS_TEST_CONFIG || {};
 let allRows = [];
@@ -1056,7 +1060,7 @@ function parseCsv(text) {
   return rows.map(r => Object.fromEntries(headers.map((h, i) => [h, r[i] || ""])));
 }
 function normalize(row) {
-  const submittedAt = row.submitted_at || row.submittedAt || row["Timestamp Client"] || "";
+  const submittedAt = row.submitted_at || row.submittedAt || row.submitted_at_utc || row["submitted_at_iso"] || row["Timestamp Client"] || "";
   const kind = labelKind(row.kind_label || row.kind || row["Jenis Test"] || row["Jenis"] || "");
   const answers = row.answer_labels || row.answerLabels || row.answers || "";
   let answerText = "";
@@ -1064,17 +1068,17 @@ function normalize(row) {
   else if (answers && typeof answers === "object") answerText = Object.values(answers).join(", ");
   else answerText = String(answers || "");
   return {
-    date: row.submitted_date || row["Tanggal Submit"] || row["Tanggal"] || formatDate(submittedAt),
-    time: row.submitted_time || row["Waktu Submit"] || row["Waktu"] || formatTime(submittedAt),
+    date: row.submitted_date || row.tanggal_submit || row["Tanggal Submit"] || row["Tanggal"] || formatDate(submittedAt),
+    time: row.submitted_time || row.waktu_submit || row["Waktu Submit"] || row["Waktu"] || formatTime(submittedAt),
     submittedAt,
-    day: String(row.meeting || row.day || row["Pertemuan"] || row["Day"] || "").replace("Day ", ""),
+    day: String(row.meeting || row.day || row.pertemuan || row["Pertemuan"] || row["Day"] || "").replace("Day ", ""),
     kind,
     kindId: normalizeKindId(kind),
     email: row.email || row["Email Siswa"] || row["Email"] || "",
-    student: row.name || row.studentName || row["Nama Lengkap Siswa"] || row["Nama Siswa"] || "",
-    teacher: row.teacher || row.teacherName || row["Nama Teacher"] || row["Nama Guru"] || row["Guru"] || "",
-    classMode: row.branch || row.branchName || row.className || row.classMode || row["Cabang"] || row["Kelas Online/Offline"] || row["Kelas"] || "",
-    score: Number(row.score ?? row["Nilai"] ?? row["Score"] ?? 0),
+    student: row.name || row.studentName || row.student_name || row.nama_siswa || row["Nama Lengkap Siswa"] || row["Nama Siswa"] || "",
+    teacher: row.teacher || row.teacherName || row.nama_teacher || row["Nama Teacher"] || row["Nama Guru"] || row["Guru"] || "",
+    classMode: row.branch || row.branchName || row.className || row.classMode || row.cabang || row["Cabang"] || row["Kelas Online/Offline"] || row["Kelas"] || "",
+    score: Number(row.score ?? row.nilai ?? row["Nilai"] ?? row["Score"] ?? 0),
     answerText
   };
 }
@@ -1216,14 +1220,54 @@ function loadLocalRows() {
     return [];
   }
 }
+function loadSeedRows() {
+  return Array.isArray(window.MATHCHAMPS_SEEDED_RESULTS) ? window.MATHCHAMPS_SEEDED_RESULTS : [];
+}
+function loadImportedRows() {
+  try {
+    return JSON.parse(localStorage.getItem("mathchamps-online-imported-results") || "[]");
+  } catch (error) {
+    console.warn("Data import tidak bisa dibaca.", error);
+    return [];
+  }
+}
+function saveImportedRows(rows) {
+  const existing = loadImportedRows();
+  const merged = dedupeRows(existing.concat(rows));
+  localStorage.setItem("mathchamps-online-imported-results", JSON.stringify(merged));
+  return merged.length - existing.length;
+}
+function parseImportedRows(fileName, text) {
+  if (/\.csv$/i.test(fileName)) return parseCsv(text);
+  const parsed = JSON.parse(text);
+  if (Array.isArray(parsed)) return parsed;
+  if (Array.isArray(parsed.rows)) return parsed.rows;
+  if (Array.isArray(parsed.data)) return parsed.data;
+  return [parsed];
+}
+function canonicalSubmittedAt(row) {
+  const raw = row.submitted_at || row.submittedAt || row.submitted_at_utc || row["submitted_at_iso"] || row["Timestamp Client"] || "";
+  const date = new Date(raw);
+  if (!Number.isNaN(date.getTime())) return date.toISOString();
+  return [row.submitted_date || row.tanggal_submit || row["Tanggal Submit"] || "", row.submitted_time || row.waktu_submit || row["Waktu Submit"] || ""].join(" ").trim();
+}
+function canonicalTestId(row) {
+  const explicit = row.test_id || row.testId || row["Test ID"];
+  if (explicit) return String(explicit).trim();
+  const day = String(row.meeting || row.day || row.pertemuan || row["Pertemuan"] || row["Day"] || "").replace("Day ", "");
+  const kind = normalizeKindId(row.kind_label || row.kind || row["Jenis Test"] || row["Jenis"] || "");
+  return `${day}-${kind}`;
+}
 function dedupeRows(rows) {
   const seen = new Set();
   return rows.filter((row) => {
+    const email = String(row.email || row["Email Siswa"] || row["Email"] || "").trim().toLowerCase();
+    const fallbackIdentity = String(row.student_key || row.studentKey || row["Student Key"] || row.name || row.studentName || row.student_name || "").trim().toLowerCase();
     const key = [
-      row.student_key || row.studentKey || row["Student Key"] || "",
-      row.test_id || row.testId || row["Test ID"] || "",
-      String(row.email || row["Email Siswa"] || row["Email"] || "").trim().toLowerCase(),
-      row.submitted_at || row.submittedAt || row["Timestamp Client"] || row["Tanggal Submit"] || ""
+      email || fallbackIdentity,
+      row.batchId || row.batch_id || row["Batch ID"] || "",
+      canonicalTestId(row),
+      canonicalSubmittedAt(row)
     ].join("|");
     if (seen.has(key)) return false;
     seen.add(key);
@@ -1289,6 +1333,8 @@ async function loadResults() {
         errors.push("CSV Google Sheet");
       }
     }
+    chunks.push(loadSeedRows());
+    chunks.push(loadImportedRows());
     chunks.push(loadLocalRows());
     let rows = dedupeRows(chunks.flat());
     if (!rows.length && errors.length) {
@@ -1316,6 +1362,22 @@ async function loadResults() {
 });
 document.getElementById("refreshBtn").addEventListener("click", loadResults);
 document.getElementById("exportBtn").addEventListener("click", exportCsv);
+document.getElementById("importBtn").addEventListener("click", () => document.getElementById("importFile").click());
+document.getElementById("importFile").addEventListener("change", async (event) => {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  try {
+    const rows = parseImportedRows(file.name, await file.text());
+    const added = saveImportedRows(rows);
+    setResultStatus("ok", `Backup berhasil diimport: ${rows.length} baris dibaca, ${added} baris baru ditambahkan.`);
+    await loadResults();
+  } catch (error) {
+    console.error(error);
+    setResultStatus("err", "File backup belum bisa diimport. Pastikan formatnya JSON atau CSV hasil export dashboard/recovery.");
+  } finally {
+    event.target.value = "";
+  }
+});
 loadResults();
 </script>
 
