@@ -1128,6 +1128,9 @@ async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
 }
 async function listStoredResults(day, kindId) {
   const prefix = `${config.resultPrefix}/day${day}/${kindId}`;
+  return listStoredResultsByPrefix(prefix);
+}
+async function listStoredResultsByPrefix(prefix) {
   const response = await fetchWithTimeout(`${config.supabaseUrl}/storage/v1/object/list/html-pages`, {
     method: "POST",
     headers: {
@@ -1144,14 +1147,22 @@ async function listStoredResults(day, kindId) {
   }, 6000);
   if (!response.ok) throw new Error(await response.text());
   const files = await response.json();
-  const rows = [];
-  for (const file of files.filter((item) => item.name && item.name.endsWith(".json"))) {
+  const rows = await Promise.all(files.filter((item) => item.name && item.name.endsWith(".json")).map(async (file) => {
     const url = `${config.supabaseUrl}/storage/v1/object/public/html-pages/${prefix}/${file.name}?v=${Date.now()}`;
-    const itemResponse = await fetchWithTimeout(url, {}, 6000);
-    if (itemResponse.ok) rows.push(await itemResponse.json());
-  }
-  return rows;
+    try {
+      const itemResponse = await fetchWithTimeout(url, {}, 6000);
+      if (itemResponse.ok) return await itemResponse.json();
+    } catch (error) {
+      console.warn("Satu file hasil gagal dibaca.", file.name, error);
+    }
+    return null;
+  }));
+  return rows.filter(Boolean);
 }
+const LEGACY_STORAGE_PREFIXES = [
+  "api/math-champs-fnb-online-day1-results-20260614/pre",
+  "api/math-champs-fnb-online-day1-results-20260614/post"
+];
 async function loadStorageRows() {
   if (!config.supabaseUrl || !config.storageKey || !config.resultPrefix) {
     throw new Error("Konfigurasi penyimpanan hasil belum lengkap di test-config.js.");
@@ -1161,6 +1172,7 @@ async function loadStorageRows() {
     tasks.push(listStoredResults(day, "pre"));
     tasks.push(listStoredResults(day, "post"));
   }
+  LEGACY_STORAGE_PREFIXES.forEach((prefix) => tasks.push(listStoredResultsByPrefix(prefix)));
   const chunks = await Promise.all(tasks);
   return chunks.flat();
 }
